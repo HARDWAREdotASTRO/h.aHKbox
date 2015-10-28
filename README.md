@@ -1,2 +1,2 @@
 # h.aHKbox
-Open source hardware system for monitoring and control of cryogenic temperatures and systems.
+hardware.astronomy Housekeeping Box: Open source hardware system for monitoring and control of cryogenic temperatures and systems.
