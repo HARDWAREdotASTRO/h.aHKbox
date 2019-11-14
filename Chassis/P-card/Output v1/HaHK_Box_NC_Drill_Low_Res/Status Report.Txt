@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [HaHK_Box.PrjPcb]
+   Generated File[PCardWBJ.TXT]
+   Generated File[PCardWBJ.LDP]
+   Generated File[PCardWBJ.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 5:16:47 AM On 11/14/2019
