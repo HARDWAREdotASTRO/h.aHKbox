@@ -1,0 +1,12 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of Project [HaHK_Box.PrjPcb]
+   Generated File[PCardWBJ.RUL]
+   Generated File[PCardWBJ.EXTREP]
+   Generated File[PCardWBJ.REP]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 5:08:51 AM On 11/14/2019
