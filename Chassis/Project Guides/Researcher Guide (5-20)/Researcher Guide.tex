@@ -42,7 +42,7 @@ ZEUS2 already has equipment that accomplishes this task. It's expensive, relativ
 Along with this problem, the existing equipment was not designed for ZEUS2. It isn't even one piece equipment, but multiple separate units working together. It functions well enough for the task at hand but it's not the most efficient about it. The equipment takes up a lot of space for features that don't even apply to ZEUS2, and some features rely on workaround and hacks that are inconvenient. A result of this inefficiency is that sometimes ZEUS2 is overcooled, and operators have to wait for the device to warm back up to temp. This can waste precious observation time. 
 
 \section{The Solution}
-This is where the H.aHKBox comes in. The goal is design a single unit that can replace the existing equipment, that can not only be self repaired easily, but also leaves room for future additions. It can function not only as a the temperature monitor, but also as the cooler controller, among other things. It is a modular systems such that every functional unit can be developed as a plug-n-play circuit board. I like to think of this like plugging a Graphics Card into the Motherboard of a desktop computer. These cards can communicate together as necessary, get power from the Motherboard, and each have their own external connections that allow for hookups to external sensors and devices. This project is Open Source, to aid in future repairs, and increase implementation and design. The project is broken into 4 physical design units listed in the subsections below.
+This is where the H.aHKBox comes in. The goal is design a single unit that can replace the existing equipment, that can not only be self repaired easily, but also leaves room for future additions. It can function not only as a the temperature monitor, but also as the cooler controller, among other things. It is a modular systems such that every functional unit can be developed as a plug-n-play circuit board. I like to think of this like plugging a Graphics Card into the Motherboard of a desktop computer. These cards can communicate together as necessary, get power from the Motherboard, and each have their own external connections that allow for hookups to external sensors and devices. This project is Open Source, to aid in future repairs, and increase implementation and design. The project is broken into 5 physical design units listed in the subsections below.
 
 \subsection{4-wire AC Bridge}
 Unknown Daughtercard.
@@ -55,14 +55,15 @@ This is a daughtercard to function as a PID (Proportional-Integral-Derivative) C
 
 This particular PID Controller Card will function as the temperature controller. It will read in from temperature sensors connected to ZEUS2, compare those temperatures to the desired values, and output to the cooler such that the proper temperatures are maintained. 
 
-\subsection{Chassis}
-This is foundation of the unit. It consists of the case itself, power supplies, cooling fan, touch screen, motherboard, micro-controllers (Arduino Uno, Raspberry Pi), and port panel. The chassis does not perform any functions without cards installed. It's not a perfect analogy, but you can imagine a desktop computer without a cpu or gpu. It is the foundation for the device, but it is relatively useless alone. This is where all official design time has been invested so far.
-
 \subsection{P-Card}
-Since the daughtercards need to be designed and tested but cost a small fortune to manufacture, I designed a prototyping card. It can plug into the motherboard, and uses a female connector along with banana jacks to allow for prototyping circuits on the connected breadboard.
+Since the daughtercards need to be designed and tested but cost a small fortune to manufacture, I designed a prototyping card. It can plug into the motherboard, and uses a female connector along with banana jacks to allow for prototyping circuits on the attached breadboard. I like to call it the Jean-Luc P-card in honor of Star Trek's greatest captain, but Prototyping-card works too. Once this is complete, prototyping the cards listed above should be much easier.
+
+\subsection{Chassis}
+This is foundation of the unit. It consists of the case itself, power supplies, cooling fan, touch screen, motherboard/backplane, micro-controllers (Arduino Uno, Raspberry Pi), and port panel. The chassis does not perform any functions without cards installed. It's not a perfect analogy, but you can imagine a desktop computer without a cpu or gpu. It is the foundation for the device, but it is relatively useless alone. This is where most design time has been invested so far, but fleshing out the P-card really helped flesh out what the connectors needed to look like on the backplane. I have not done much in regards to physical or mechanical design. I've been almost exclusively doing electrical design with heavy plannings towards the software design.
+
 
 \subsection{Knowledge "Requirements"}
-Astronomy is cool! Carl knows it and he'll do everything to help you understand it too! Don't ever shy away from learning something new, astronomy related or not. That said, this project tends to fall under mechanical, electrical, and software engineering, with significant standing in control theory. I mean this with lots of love: this project is essentially a glorified thermostat. To do it right you're going to need to understand the basics of how astronomy is done, but you don't need an astronomy degree. You'll learn a lot more than you need to, and not just in astronomy, which is really cool! Yes, you are here to work on this project, but you're also here to learn and have fun! If something peaks your interest and it will help you accomplish a task, spend some time to learn more about it.
+Astronomy is cool! Carl knows it and he'll do everything to help you understand it too! Don't ever shy away from learning something new, astronomy related or not. That said, this project tends to fall under mechanical, electrical, and software engineering, with significant standing in control theory. I mean this with lots of love: this project is essentially a glorified thermostat. To do it right you're going to want to understand the basics of how astronomy is done, but you don't need an astronomy degree. You'll learn a lot more than you need to, and not just in astronomy, which is really cool! Yes, you are here to work on this project, but you're also here to learn and have fun! If something peaks your interest and it will help you accomplish a task, spend some time to learn more about it.
 
 \section{What We've Accomplished}
 \subsection{Case}
@@ -74,11 +75,11 @@ After a lot research and consideration regarding the desired capabilities of the
 \subsection{Touch Screen}
 We chose a touchscreen designed specifically for the Raspberry Pi. It allows for the Raspberry Pi to be mounted to the back of it which helps efficiently use the space inside the case. It's 7" and uses HDMI and USB to connect to the Pi.
 
-\subsection{Motherboard}
+\subsection{Motherboard/Backplane}
 With 10 card slots, 3 temperature sensors, arduino hookup, 7-segment display output, and connectors for data and power, the electrical design for this board is well under way.
 
 \subsection{P-Card}
-The design for this card is finished, but translating that into electrical designs that can be send to a manufacturer have proven difficult. I'm very close to being finished with it though.
+The design for this card is finished, but translating that into electrical designs that can be sent to a manufacturer have proven difficult. I'm very close to being finished with it though. My first mistake was designing the entire thing backwards. In order for it to plug into the motherboard it would've been upside-down. Tried to fix it but then it was upside-down the other way. Tried to fix it again and that's where I am now. Still need to route some connections and then hopefully I finally got it right.
 
 \subsection{Microcontrollers}
 We did choose the Arduino Uno and Raspberry Pi Model 3 B+ to act as the brains of the Motherboard. They're well documented and have the communication features I sought.
@@ -90,7 +91,7 @@ The Bridge Cards mentioned above have not been started on as far as I'm aware. D
 \subsection{P-Card}
 The P-card design is so close to being done. Hopefully within the first week or two work this summer we'll be able to order the cards from a manufacturer.
 
-\subsection{Motherboard}
+\subsection{Motherboard/Backplane}
 Designs of the Motherboard still need to be finished. The limited space has already proven to be a challenge, but it shouldn't be too big of a problem. Running traces for this board is going to be a real challenge, but it should be fun too.
 
 \subsection{Programming}
@@ -126,16 +127,24 @@ Github does link into OSF really well so if you don't have any interest in git, 
 I know this may be meaningless with COVID19 keeping everyone inside, but a large whiteboard is so so helpful. I'm sure paper sketching is a fine substitute but after working on this project I decided I'm definitely getting a whiteboard for my room.
 
 \subsection{Coworkers}
-We all know different stuff to different degrees. We can all lean on each other and it only increases the fun to share knowledge. The only thing I love more than teaching others is learning from others. You need help with something, just ask. If not me someone else. If I don't know the answer I'll likely help you find it.
+We all know different stuff to different degrees. We can all lean on each other and it only increases the fun to share knowledge. The only thing I love more than teaching others is learning from others. You need help with something, just ask. If not me someone else. If I don't know the answer I'll likely help you find it. That said, don't assume I'm always right. We all make mistakes. Stay vigilant of that and you'll do great!
 
 \subsection{Email}
-Emails aren't a bad way to communicate, especially if someone is currently unavailable by other means. I check mine regularly and you should do the same.
+Emails aren't a bad way to communicate, especially if someone is currently unavailable by other means. I check mine regularly and you should do the same, especially working from home. I generally set aside 15 minutes after lunch to check it and respond to stuff as necessary. This also helps keep me in the mindset of work.
 
 \subsection{Microsoft Teams}
 I've never used Teams before. Last summer we used Slack but it wasn't the most cooperative. Hopefully Teams will be a little more seamless.
 
 \subsection{Discord}
-I use discord for a lot of different things so I pretty much always have it going if I'm at my computer. I'll be making a discord channel specifically for this research group once we get started and it's my preferred method of contact. Instant messages are great if it's a simple question and voice calls are a good backup for more in depth conversations.
+I use discord for a lot of different things so I pretty much always have it going if I'm at my computer. I'll be making a discord channel specifically for this research group once we get started and it's my preferred method of contact. Instant messages are great if it's a simple question and voice calls are a good backup for more in depth conversations. Zoom and Teams could be used instead, but I think they're both a bit more of a hassle to use. It is all up to personal preference though.
+
+\section{Workflow}
+
+\subsection{Routine - Personal Notes}
+I suggest you use this as an opportunity to setup a daily routine. I'm sure Carl will talk to everyone about it, but it's good to build habits around work, especially when your place of work is not just your place of work. I use my gaming PC to work on this project, which means getting in the proper mindset of working each morning is really important. Carl will definitely cover some basics of how to do this but I start off by looking at my "to-do list". I use a website called Trello for this but you can use plenty of different things. If you do use something like this make sure it's linked somehow to OSF. Just a link in your personal notes would suffice. After checking that I write up a daily task list. This is usually a paragraph of explaining what I want to do today and why, followed by a checkbox list of tangible tasks. This I do entirely on OSF with a new personal wiki page for each month. This was entirely Carl's idea (and it was a huge help) so I'm sure he'll go over it in more detail than this. I finish up the day in the opposite order. Fill in the checkbox list as needed, write up a summary for the day and a short idea of what to start the day with tomorrow. Then update the to-do list if necessary. This "sandwich" of preparation and summary really helps me stay in the mindset of working and stay on task.
+
+\subsection{Group Meetings}
+Look through some of the group meeting notes on OSF. It can be a little daunting sometimes but please take advantage of the meetings. Ask questions if you have them. Share your successes and failures with everyone. It can not only help you get past hurdles in your research but really helps get over any presentation anxiety regarding your project. It takes time for the project to really feel like your own and these meetings give you a chance to show off what you did, which really really helps.
 
 %\begin{thebibliography}{99}
 % The numeral (here 99) in curly braces is nominally the number of entries in
