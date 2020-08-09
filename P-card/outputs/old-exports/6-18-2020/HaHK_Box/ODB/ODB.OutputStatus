@@ -1,0 +1,25 @@
+[OutputStatus]
+OutputFileNames0=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\matrix\matrix
+OutputFileNames1=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\profile
+OutputFileNames2=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\stephdr
+OutputFileNames3=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\topoverlay\features
+OutputFileNames4=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\toppaste\features
+OutputFileNames5=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\topsolder\features
+OutputFileNames6=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\top\features
+OutputFileNames7=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\mid1\features
+OutputFileNames8=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\mid2\features
+OutputFileNames9=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\bottom\features
+OutputFileNames10=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\bottomsolder\features
+OutputFileNames11=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\bottompaste\features
+OutputFileNames12=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\bottomoverlay\features
+OutputFileNames13=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\drill\features
+OutputFileNames14=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\drill\tools
+OutputFileNames15=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\keepout\features
+OutputFileNames16=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\Outline\features
+OutputFileNames17=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\comp_+_top\features
+OutputFileNames18=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\layers\comp_+_top\components
+OutputFileNames19=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\eda\data
+OutputFileNames20=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\odb\steps\pcb\netlists\cadnet\netlist
+OutputFileNames21=C:\ProgramData\Altium\CircuitMaker {F03EC19D-B064-4084-B5D9-2C9C1CD17A0F}\Projects\89154E72-5B4C-47DA-8F46-1C92EBF08C6B\e5c00127-e50b-48d9-826b-fce1436a65c3\Outputs\ODB\PCardWBJ.REP
+Success=1
+HasRun=1
