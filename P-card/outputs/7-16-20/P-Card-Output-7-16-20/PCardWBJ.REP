@@ -1,0 +1,314 @@
+*************************************************************
+FileName = PCardWBJ.GBR
+AutoAperture = True
+*************************************************************
+Generating : Top Layer
+      File : PCardWBJ.GTL
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+*************************************************************
+
+*************************************************************
+Generating : Signal Layer 1
+      File : PCardWBJ.G1
+
+    Adding Layer      : Signal Layer 1
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D19
+    D20
+    D22
+    D23
+    D24
+*************************************************************
+
+*************************************************************
+Generating : Signal Layer 2
+      File : PCardWBJ.G2
+
+    Adding Layer      : Signal Layer 2
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D22
+    D23
+    D24
+*************************************************************
+
+*************************************************************
+Generating : Bottom Layer
+      File : PCardWBJ.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+*************************************************************
+
+*************************************************************
+Generating : Top Paste
+      File : PCardWBJ.GTP
+
+    Adding Layer      : Top Paste
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Top Overlay
+      File : PCardWBJ.GTO
+
+    Adding Layer      : Top Overlay
+
+
+Used DCodes :
+    D26
+    D27
+*************************************************************
+
+*************************************************************
+Generating : Top Solder
+      File : PCardWBJ.GTS
+
+    Adding Layer      : Top Solder
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+*************************************************************
+
+*************************************************************
+Generating : Bottom Solder
+      File : PCardWBJ.GBS
+
+    Adding Layer      : Bottom Solder
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+*************************************************************
+
+*************************************************************
+Generating : Bottom Overlay
+      File : PCardWBJ.GBO
+
+    Adding Layer      : Bottom Overlay
+
+
+Used DCodes :
+    D26
+*************************************************************
+
+*************************************************************
+Generating : Bottom Paste
+      File : PCardWBJ.GBP
+
+    Adding Layer      : Bottom Paste
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Keep-Out Layer
+      File : PCardWBJ.GKO
+
+    Adding Layer      : Keep-Out Layer
+
+
+Used DCodes :
+    D26
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 13
+      File : PCardWBJ.3D Top
+
+    Adding Layer      : Mechanical 13
+
+
+Used DCodes :
+    D36
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 15
+      File : PCardWBJ.Courtyard Top
+
+    Adding Layer      : Mechanical 15
+
+
+Used DCodes :
+    D36
+*************************************************************
+
+*************************************************************
+Generating : Multi-Layer
+      File : PCardWBJ.GML
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+*************************************************************
+
+*************************************************************
+Generating : Dielectric 1
+      File : PCardWBJ.1
+
+    Adding Layer      : Dielectric 1
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Dielectric 2
+      File : PCardWBJ.2
+
+    Adding Layer      : Dielectric 2
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Dielectric 3
+      File : PCardWBJ.3
+
+    Adding Layer      : Dielectric 3
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Drill Drawing
+      File : PCardWBJ.GD1
+
+    Adding Drill Pair : Top Layer-Bottom Layer
+
+    Adding Layer      : Drill Drawing
+
+
+Used DCodes :
+    D26
+    D37
+    D38
+    D39
+*************************************************************
+
+*************************************************************
+Generating : Drill Guide
+      File : PCardWBJ.GG1
+
+    Adding Drill Pair : Top Layer-Bottom Layer
+
+    Adding Layer      : Drill Guide
+
+
+Used DCodes :
+    D40
+*************************************************************
+
