@@ -1,7 +1,7 @@
 This project was presented in progress at the 235th AAS confernece in Honolulu, HI in January of 2020. The submitted abstract for this presentation can be found here: https://ui.adsabs.harvard.edu/abs/2020AAS...23517507S/abstract
 
 # H.aHkBox
-The Hardware.astronomy Housekeeping Box (H.aHkBox) is an open source modular platform originally designed for the monitoring and control of temperatures on the ZEUS2 grating spectrometer. I began working on this project under the direction of Dr. Carl Ferkinhoff in May of 2019 and continue to do so (Dec 2020). I am not the only person working this project. The names of additional contributors can be found in the latter the links below.
+The Hardware.astronomy Housekeeping Box (H.aHkBox) is an open source modular platform originally designed for the monitoring and control of temperatures on the ZEUS2 grating spectrometer. I began working on this project under the direction of Dr. Carl Ferkinhoff in May of 2019 and continue to do so (Dec 2020). 
 
 Additional information about ZEUS2 can be found here: http://hosting.astro.cornell.edu/~spifiweb/zeus2/index.html
 
