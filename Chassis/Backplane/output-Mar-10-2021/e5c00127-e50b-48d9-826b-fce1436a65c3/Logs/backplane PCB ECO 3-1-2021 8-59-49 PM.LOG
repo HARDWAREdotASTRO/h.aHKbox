@@ -1,0 +1,20 @@
+Added Component: Designator=DTMP-RES(PCB-3trqkg5dul8e4bq69e8d-1)
+Added Component: Designator=PUR-SCL2(PCB-3trqkg5dul8e4bq69e8d-1)
+Added Component: Designator=PUR-SDA1(PCB-3trqkg5dul8e4bq69e8d-1)
+Added Component: Designator=PUR-SDA2(PCB-3trqkg5dul8e4bq69e8d-1)
+Added Component: Designator=PUR-SLC1(PCB-3trqkg5dul8e4bq69e8d-1)
+Added Pin To Net: NetName=NetDTMP-A_3 Pin=DTMP-RES-1
+Added Pin To Net: NetName=NetDTMP-A_2 Pin=DTMP-RES-2
+Added Pin To Net: NetName=NetDTMP-A_3 Pin=PUR-SCL2-1
+Added Pin To Net: NetName=NetI2C1_5 Pin=PUR-SCL2-2
+Added Pin To Net: NetName=NetAUNO_SCL Pin=PUR-SDA1-1
+Added Pin To Net: NetName=NetAUNO_3.3V Pin=PUR-SDA1-2
+Added Pin To Net: NetName=NetDTMP-A_3 Pin=PUR-SDA2-1
+Added Pin To Net: NetName=NetI2C1_6 Pin=PUR-SDA2-2
+Added Pin To Net: NetName=NetAUNO_SDA Pin=PUR-SLC1-1
+Added Pin To Net: NetName=NetAUNO_3.3V Pin=PUR-SLC1-2
+Added Member To Class: ClassName=backplane Member=Component DTMP-RES 4.7kOhm
+Added Member To Class: ClassName=backplane Member=Component PUR-SCL2 4.7kOhm
+Added Member To Class: ClassName=backplane Member=Component PUR-SDA1 4.7kOhm
+Added Member To Class: ClassName=backplane Member=Component PUR-SDA2 4.7kOhm
+Added Member To Class: ClassName=backplane Member=Component PUR-SLC1 4.7kOhm

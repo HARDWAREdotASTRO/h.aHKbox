@@ -1,0 +1,40 @@
+Added Component: Designator=HP_A(PCB-u2v43o1ftwqs3duy389i-1)
+Added Component: Designator=HP_B(PCB-u2v43o1ftwqs3duy389i-1)
+Added Component: Designator=HP_C(PCB-u2v43o1ftwqs3duy389i-1)
+Added Component: Designator=HP_D(PCB-u2v43o1ftwqs3duy389i-1)
+Added Component: Designator=HP_E(PCB-u2v43o1ftwqs3duy389i-1)
+Added Component: Designator=HP_F(PCB-u2v43o1ftwqs3duy389i-1)
+Added Component: Designator=HP_G(PCB-u2v43o1ftwqs3duy389i-1)
+Added Component: Designator=HP_H(PCB-u2v43o1ftwqs3duy389i-1)
+Added Component: Designator=HP_I(PCB-u2v43o1ftwqs3duy389i-1)
+Added Component: Designator=HP_J(PCB-u2v43o1ftwqs3duy389i-1)
+Added Pin To Net: NetName=NetHP_A_A Pin=HP_A-A
+Added Pin To Net: NetName=NetHP_A_B Pin=HP_A-B
+Added Pin To Net: NetName=NetHP_B_A Pin=HP_B-A
+Added Pin To Net: NetName=NetHP_B_B Pin=HP_B-B
+Added Pin To Net: NetName=NetHP_C_A Pin=HP_C-A
+Added Pin To Net: NetName=NetHP_C_B Pin=HP_C-B
+Added Pin To Net: NetName=NetHP_D_A Pin=HP_D-A
+Added Pin To Net: NetName=NetHP_D_B Pin=HP_D-B
+Added Pin To Net: NetName=NetHP_E_A Pin=HP_E-A
+Added Pin To Net: NetName=NetHP_E_B Pin=HP_E-B
+Added Pin To Net: NetName=NetHP_F_A Pin=HP_F-A
+Added Pin To Net: NetName=NetHP_F_B Pin=HP_F-B
+Added Pin To Net: NetName=NetHP_G_A Pin=HP_G-A
+Added Pin To Net: NetName=NetHP_G_B Pin=HP_G-B
+Added Pin To Net: NetName=NetHP_H_A Pin=HP_H-A
+Added Pin To Net: NetName=NetHP_H_B Pin=HP_H-B
+Added Pin To Net: NetName=NetHP_I_A Pin=HP_I-A
+Added Pin To Net: NetName=NetHP_I_B Pin=HP_I-B
+Added Pin To Net: NetName=NetHP_J_A Pin=HP_J-A
+Added Pin To Net: NetName=NetHP_J_B Pin=HP_J-B
+Added Member To Class: ClassName=backplane Member=Component HP_A Cooper Bussmann EM250502V
+Added Member To Class: ClassName=backplane Member=Component HP_B Cooper Bussmann EM250502V
+Added Member To Class: ClassName=backplane Member=Component HP_C Cooper Bussmann EM250502V
+Added Member To Class: ClassName=backplane Member=Component HP_D Cooper Bussmann EM250502V
+Added Member To Class: ClassName=backplane Member=Component HP_E Cooper Bussmann EM250502V
+Added Member To Class: ClassName=backplane Member=Component HP_F Cooper Bussmann EM250502V
+Added Member To Class: ClassName=backplane Member=Component HP_G Cooper Bussmann EM250502V
+Added Member To Class: ClassName=backplane Member=Component HP_H Cooper Bussmann EM250502V
+Added Member To Class: ClassName=backplane Member=Component HP_I Cooper Bussmann EM250502V
+Added Member To Class: ClassName=backplane Member=Component HP_J Cooper Bussmann EM250502V

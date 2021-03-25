@@ -1,0 +1,70 @@
+Removed Pin From Net: NetName=NetHP_A_B Pin=S-A-HPOA
+Removed Pin From Net: NetName=NetHP_A_A Pin=S-A-HPOB
+Removed Pin From Net: NetName=NetHP_B_B Pin=S-B-HPOA
+Removed Pin From Net: NetName=NetHP_B_A Pin=S-B-HPOB
+Removed Pin From Net: NetName=NetHP_C_B Pin=S-C-HPOA
+Removed Pin From Net: NetName=NetHP_C_A Pin=S-C-HPOB
+Removed Pin From Net: NetName=NetHP_D_B Pin=S-D-HPOA
+Removed Pin From Net: NetName=NetHP_D_A Pin=S-D-HPOB
+Removed Pin From Net: NetName=NetHP_E_B Pin=S-E-HPOA
+Removed Pin From Net: NetName=NetHP_E_A Pin=S-E-HPOB
+Removed Pin From Net: NetName=NetHP_F_B Pin=S-F-HPOA
+Removed Pin From Net: NetName=NetHP_F_A Pin=S-F-HPOB
+Removed Pin From Net: NetName=NetHP_G_B Pin=S-G-HPOA
+Removed Pin From Net: NetName=NetHP_G_A Pin=S-G-HPOB
+Removed Pin From Net: NetName=NetHP_H_B Pin=S-H-HPOA
+Removed Pin From Net: NetName=NetHP_H_A Pin=S-H-HPOB
+Removed Pin From Net: NetName=NetHP_I_B Pin=S-I-HPOA
+Removed Pin From Net: NetName=NetHP_I_A Pin=S-I-HPOB
+Removed Pin From Net: NetName=NetHP_J_B Pin=S-J-HPOA
+Removed Pin From Net: NetName=NetHP_J_A Pin=S-J-HPOB
+Change Component Comment : Designator=HPO-A Old Comment=Cooper Bussmann EM250502V New Comment=EM250502V
+Change Component Comment : Designator=HPO-B Old Comment=Cooper Bussmann EM250502V New Comment=EM250502V
+Change Component Comment : Designator=HPO-C Old Comment=Cooper Bussmann EM250502V New Comment=EM250502V
+Change Component Comment : Designator=HPO-D Old Comment=Cooper Bussmann EM250502V New Comment=EM250502V
+Change Component Comment : Designator=HPO-E Old Comment=Cooper Bussmann EM250502V New Comment=EM250502V
+Change Component Comment : Designator=HPO-F Old Comment=Cooper Bussmann EM250502V New Comment=EM250502V
+Change Component Comment : Designator=HPO-G Old Comment=Cooper Bussmann EM250502V New Comment=EM250502V
+Change Component Comment : Designator=HPO-H Old Comment=Cooper Bussmann EM250502V New Comment=EM250502V
+Change Component Comment : Designator=HPO-I Old Comment=Cooper Bussmann EM250502V New Comment=EM250502V
+Change Component Comment : Designator=HPO-J Old Comment=Cooper Bussmann EM250502V New Comment=EM250502V
+Added Pin To Net: NetName=NetHP_A_A Pin=S-A-HPOA
+Added Pin To Net: NetName=NetHP_A_B Pin=S-A-HPOB
+Added Pin To Net: NetName=NetHP_B_A Pin=S-B-HPOA
+Added Pin To Net: NetName=NetHP_B_B Pin=S-B-HPOB
+Added Pin To Net: NetName=NetHP_C_A Pin=S-C-HPOA
+Added Pin To Net: NetName=NetHP_C_B Pin=S-C-HPOB
+Added Pin To Net: NetName=NetHP_D_A Pin=S-D-HPOA
+Added Pin To Net: NetName=NetHP_D_B Pin=S-D-HPOB
+Added Pin To Net: NetName=NetHP_E_A Pin=S-E-HPOA
+Added Pin To Net: NetName=NetHP_E_B Pin=S-E-HPOB
+Added Pin To Net: NetName=NetHP_F_A Pin=S-F-HPOA
+Added Pin To Net: NetName=NetHP_F_B Pin=S-F-HPOB
+Added Pin To Net: NetName=NetHP_G_A Pin=S-G-HPOA
+Added Pin To Net: NetName=NetHP_G_B Pin=S-G-HPOB
+Added Pin To Net: NetName=NetHP_H_A Pin=S-H-HPOA
+Added Pin To Net: NetName=NetHP_H_B Pin=S-H-HPOB
+Added Pin To Net: NetName=NetHP_I_A Pin=S-I-HPOA
+Added Pin To Net: NetName=NetHP_I_B Pin=S-I-HPOB
+Added Pin To Net: NetName=NetHP_J_A Pin=S-J-HPOA
+Added Pin To Net: NetName=NetHP_J_B Pin=S-J-HPOB
+Change Net Name : Old Net Name=NetHP_A_A New Net Name=NetHPO-A_A
+Change Net Name : Old Net Name=NetHP_A_B New Net Name=NetHPO-A_B
+Change Net Name : Old Net Name=NetHP_B_A New Net Name=NetHPO-B_A
+Change Net Name : Old Net Name=NetHP_B_B New Net Name=NetHPO-B_B
+Change Net Name : Old Net Name=NetHP_C_A New Net Name=NetHPO-C_A
+Change Net Name : Old Net Name=NetHP_C_B New Net Name=NetHPO-C_B
+Change Net Name : Old Net Name=NetHP_D_A New Net Name=NetHPO-D_A
+Change Net Name : Old Net Name=NetHP_D_B New Net Name=NetHPO-D_B
+Change Net Name : Old Net Name=NetHP_E_A New Net Name=NetHPO-E_A
+Change Net Name : Old Net Name=NetHP_E_B New Net Name=NetHPO-E_B
+Change Net Name : Old Net Name=NetHP_F_A New Net Name=NetHPO-F_A
+Change Net Name : Old Net Name=NetHP_F_B New Net Name=NetHPO-F_B
+Change Net Name : Old Net Name=NetHP_G_A New Net Name=NetHPO-G_A
+Change Net Name : Old Net Name=NetHP_G_B New Net Name=NetHPO-G_B
+Change Net Name : Old Net Name=NetHP_H_A New Net Name=NetHPO-H_A
+Change Net Name : Old Net Name=NetHP_H_B New Net Name=NetHPO-H_B
+Change Net Name : Old Net Name=NetHP_I_A New Net Name=NetHPO-I_A
+Change Net Name : Old Net Name=NetHP_I_B New Net Name=NetHPO-I_B
+Change Net Name : Old Net Name=NetHP_J_A New Net Name=NetHPO-J_A
+Change Net Name : Old Net Name=NetHP_J_B New Net Name=NetHPO-J_B

@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: backplane3.CMPcbDoc   3/19/2021  9:53:24 AM
+---------------------------------------------------------------------------
+
+Layer Pair : IO1 to LP
+ASCII RoundHoles File : backplane3.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        19.68mil (0.49987mm)     Round          18               12.09 Inch (306.97 mm)
+T2        28mil (0.7112mm)         Round          122              65.91 Inch (1674.08 mm)
+T3        29.53mil (0.75006mm)     Round          10               2.79 Inch (70.77 mm)
+T4        39.37mil (1mm)           Round          644              88.62 Inch (2250.99 mm)
+T5        40mil (1.016mm)          Round          400              58.29 Inch (1480.53 mm)
+T6        59.06mil (1.50012mm)     Round          20               7.60 Inch (193.04 mm)
+T7        98.43mil (2.50012mm)     Round          33               19.27 Inch (489.56 mm)
+T8        110.24mil (2.8001mm)     Round          20               17.94 Inch (455.68 mm)
+T9        118.11mil (2.99999mm)    Round          40               27.20 Inch (690.88 mm)
+T10       125mil (3.175mm)         Round          20               19.22 Inch (488.24 mm)
+---------------------------------------------------------------------------
+Totals                                            1327             318.93 Inch (8100.74 mm)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

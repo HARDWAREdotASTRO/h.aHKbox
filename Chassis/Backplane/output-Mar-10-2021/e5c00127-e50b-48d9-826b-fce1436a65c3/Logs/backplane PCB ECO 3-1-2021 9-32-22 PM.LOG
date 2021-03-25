@@ -1,0 +1,21 @@
+Change Component DesignItemId : Designator=HP_A Old DesignItemId=CMP-9ab5517917744572-4 New DesignItemId=CMP-9ab5517917744572-5
+Change Component DesignItemId : Designator=HP_B Old DesignItemId=CMP-9ab5517917744572-4 New DesignItemId=CMP-9ab5517917744572-5
+Change Component DesignItemId : Designator=HP_C Old DesignItemId=CMP-9ab5517917744572-4 New DesignItemId=CMP-9ab5517917744572-5
+Change Component DesignItemId : Designator=HP_D Old DesignItemId=CMP-9ab5517917744572-4 New DesignItemId=CMP-9ab5517917744572-5
+Change Component DesignItemId : Designator=HP_E Old DesignItemId=CMP-9ab5517917744572-4 New DesignItemId=CMP-9ab5517917744572-5
+Change Component DesignItemId : Designator=HP_F Old DesignItemId=CMP-9ab5517917744572-4 New DesignItemId=CMP-9ab5517917744572-5
+Change Component DesignItemId : Designator=HP_G Old DesignItemId=CMP-9ab5517917744572-4 New DesignItemId=CMP-9ab5517917744572-5
+Change Component DesignItemId : Designator=HP_H Old DesignItemId=CMP-9ab5517917744572-4 New DesignItemId=CMP-9ab5517917744572-5
+Change Component DesignItemId : Designator=HP_I Old DesignItemId=CMP-9ab5517917744572-4 New DesignItemId=CMP-9ab5517917744572-5
+Change Component DesignItemId : Designator=HP_J Old DesignItemId=CMP-9ab5517917744572-4 New DesignItemId=CMP-9ab5517917744572-5
+Change Component Footprint: Designator=HP_A Old Footprint=PCB-u2v43o1ftwqs3duy389i-1 New Footprint=PCB-u2v43o1ftwqs3duy389i-1
+Change Component Footprint: Designator=HP_B Old Footprint=PCB-u2v43o1ftwqs3duy389i-1 New Footprint=PCB-u2v43o1ftwqs3duy389i-1
+Change Component Footprint: Designator=HP_C Old Footprint=PCB-u2v43o1ftwqs3duy389i-1 New Footprint=PCB-u2v43o1ftwqs3duy389i-1
+Change Component Footprint: Designator=HP_D Old Footprint=PCB-u2v43o1ftwqs3duy389i-1 New Footprint=PCB-u2v43o1ftwqs3duy389i-1
+Change Component Footprint: Designator=HP_E Old Footprint=PCB-u2v43o1ftwqs3duy389i-1 New Footprint=PCB-u2v43o1ftwqs3duy389i-1
+Change Component Footprint: Designator=HP_F Old Footprint=PCB-u2v43o1ftwqs3duy389i-1 New Footprint=PCB-u2v43o1ftwqs3duy389i-1
+Change Component Footprint: Designator=HP_G Old Footprint=PCB-u2v43o1ftwqs3duy389i-1 New Footprint=PCB-u2v43o1ftwqs3duy389i-1
+Change Component Footprint: Designator=HP_H Old Footprint=PCB-u2v43o1ftwqs3duy389i-1 New Footprint=PCB-u2v43o1ftwqs3duy389i-1
+Change Component Footprint: Designator=HP_I Old Footprint=PCB-u2v43o1ftwqs3duy389i-1 New Footprint=PCB-u2v43o1ftwqs3duy389i-1
+Change Component Footprint: Designator=HP_J Old Footprint=PCB-u2v43o1ftwqs3duy389i-1 New Footprint=PCB-u2v43o1ftwqs3duy389i-1
+Added Member To Class: ClassName=backplane Member=Component PUR-SLC1 4.7kOhm

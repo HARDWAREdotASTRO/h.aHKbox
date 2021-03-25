@@ -1,0 +1,22 @@
+Removed Pin From Net: NetName=NetAUNO_5V Pin=P_IN-A
+Removed Pin From Net: NetName=NetHP-A_1 Pin=P_IN-B
+Change Component DesignItemId : Designator=S-A Old DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-22 New DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-26
+Change Component DesignItemId : Designator=S-B Old DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-25 New DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-26
+Change Component DesignItemId : Designator=S-C Old DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-25 New DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-26
+Change Component DesignItemId : Designator=S-D Old DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-25 New DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-26
+Change Component DesignItemId : Designator=S-E Old DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-25 New DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-26
+Change Component DesignItemId : Designator=S-F Old DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-25 New DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-26
+Change Component DesignItemId : Designator=S-G Old DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-25 New DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-26
+Change Component DesignItemId : Designator=S-H Old DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-25 New DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-26
+Change Component DesignItemId : Designator=S-I Old DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-25 New DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-26
+Change Component DesignItemId : Designator=S-J Old DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-25 New DesignItemId=CMP-dgd04bf3j3drhl5uyyz7-26
+Change Component Footprint: Designator=S-A Old Footprint=PCBComponent_1 - duplicate New Footprint=PCBComponent_1 - duplicate
+Change Component Footprint: Designator=S-B Old Footprint=PCBComponent_1 - duplicate New Footprint=PCBComponent_1 - duplicate
+Change Component Footprint: Designator=S-C Old Footprint=PCBComponent_1 - duplicate New Footprint=PCBComponent_1 - duplicate
+Change Component Footprint: Designator=S-D Old Footprint=PCBComponent_1 - duplicate New Footprint=PCBComponent_1 - duplicate
+Change Component Footprint: Designator=S-E Old Footprint=PCBComponent_1 - duplicate New Footprint=PCBComponent_1 - duplicate
+Change Component Footprint: Designator=S-F Old Footprint=PCBComponent_1 - duplicate New Footprint=PCBComponent_1 - duplicate
+Change Component Footprint: Designator=S-G Old Footprint=PCBComponent_1 - duplicate New Footprint=PCBComponent_1 - duplicate
+Change Component Footprint: Designator=S-H Old Footprint=PCBComponent_1 - duplicate New Footprint=PCBComponent_1 - duplicate
+Change Component Footprint: Designator=S-I Old Footprint=PCBComponent_1 - duplicate New Footprint=PCBComponent_1 - duplicate
+Change Component Footprint: Designator=S-J Old Footprint=PCBComponent_1 - duplicate New Footprint=PCBComponent_1 - duplicate
