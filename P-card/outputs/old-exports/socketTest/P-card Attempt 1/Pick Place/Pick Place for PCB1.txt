@@ -1,0 +1,5 @@
+Designator Footprint               Mid X         Mid Y         Ref X         Ref Y         Pad X         Pad Y TB      Rotation Comment        
+
+*          PCBComponent_1_-_duplicate       4680mil       2945mil       4480mil       4095mil       4680mil       1195mil  T          0.00 09032606865    
+*          PCB-uzhe8vs3bcqz6bzs18qy-1       1330mil       2950mil       1130mil       3150mil       1280mil       1700mil  T          0.00 09031606901    
+
