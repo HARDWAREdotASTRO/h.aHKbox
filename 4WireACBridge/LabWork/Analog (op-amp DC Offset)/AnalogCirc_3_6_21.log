@@ -1,0 +1,87 @@
+Circuit: * C:\Users\rc3512hl\OneDrive - MNSCU\Summer_Research_2020\2020_WAG_Research_Documents\Lab_documents\4_wireAC\Analog (op-amp DC Offset)\AnalogCirc_3_6_21.asc
+
+WARNING: Less than two connections to node NC_03.  This node is used by R:U12:4.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+Gmin = 0.115292
+Gmin = 0.0123794
+Gmin = 0.00132923
+Gmin = 0.000142725
+Gmin = 1.5325e-005
+vernier = 0.5
+Gmin = 3.1742e-006
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+Gmin = 3.07691e-006
+vernier = 0.0416667
+vernier = 0.0555555
+Gmin = 2.75272e-006
+vernier = 0.074074
+vernier = 0.0987653
+Gmin = 2.30879e-006
+vernier = 0.131687
+Gmin = 1.73813e-006
+vernier = 0.175583
+vernier = 0.23411
+Gmin = 1.09639e-006
+vernier = 0.312147
+vernier = 0.416196
+Gmin = 5.33419e-007
+vernier = 0.554928
+Gmin = 1.69832e-007
+vernier = 0.739903
+vernier = 0.986537
+vernier = 0.493269
+Gmin = 4.79555e-008
+vernier = 0.246634
+vernier = 0.123317
+vernier = 0.0616586
+Gmin = 4.44346e-008
+vernier = 0.0822114
+vernier = 0.109615
+Gmin = 3.61359e-008
+vernier = 0.146154
+Gmin = 2.61494e-008
+vernier = 0.194871
+vernier = 0.259828
+Gmin = 1.52821e-008
+vernier = 0.346438
+vernier = 0.461917
+Gmin = 6.57891e-009
+vernier = 0.615889
+Gmin = 1.79943e-009
+vernier = 0.821185
+vernier = 1
+Gmin = 2.40399e-010
+Gmin = 2.58126e-011
+Gmin = 2.77161e-012
+Gmin = 2.97599e-013
+Gmin = 0
+Gmin stepping succeeded in finding the operating point.
+
+Changing Tseed to 1e-008
+Changing Tseed to 1e-010
+Heightened Def Con from 1e-010 to 1.1e-009
+
+Date: Tue Mar 09 23:51:19 2021
+Total elapsed time: 2.591 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 4290
+traniter = 2318
+tranpoints = 1084
+accept = 1069
+rejected = 14
+matrix size = 228
+fillins = 304
+solver = Normal
+Thread vector: 124.1/53.9[8] 33.1/19.8[8] 37.1/27.4[4] 3.1/152.0[1]  2592/500
+Matrix Compiler1: 25.38 KB object code size  20.6/33.0/[3.3]
+Matrix Compiler2: 26.87 KB object code size  16.6/17.4/[4.7]
+
