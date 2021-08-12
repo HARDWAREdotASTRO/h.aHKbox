@@ -19,15 +19,17 @@ from collections import deque
 
 
 max = 20
+# x list is not used only used as a test value
 X = deque(maxlen=20)
 X.append(1)
-timee = deque(maxlen = max)
+
+time = deque(maxlen = max)
 Y = deque(maxlen=max)
 Y2 = deque(maxlen=max)
 Y3 = deque(maxlen=max)
 Y4 = deque(maxlen=max)
 
-#df = pd.DataFrame({"Card data 1": Y,  "Time": timee })
+#df = pd.DataFrame({"Card data 1": Y,  "Time": time })
 
 
 app = dash.Dash(__name__)
@@ -79,6 +81,9 @@ app.layout = html.Div([
                 selected_className = 'custom-tab-selected',
                 children = [
 
+                    # test component can be implemented into something else later on 
+                    #if throught to be useful otherwise this was orginally as test for placing
+                    # other components in tabs
                     daq.Indicator(
                         id='my-daq-indicator',
                         value=True,
@@ -89,6 +94,7 @@ app.layout = html.Div([
 
 
             ),
+            
             dcc.Tab (
 
                 label = '4 wire ac',
@@ -145,12 +151,8 @@ app.layout = html.Div([
 
     html.Div([        
 
-#---------------------- One Graph ----------------------------------------------------------#
+#---------------------- LIVE GRAPH----------------------------------------------------------#
          
-
-# -----------------------------------------------------------------
-
-#---------------------- two Graph ------------------------------
         dcc.Graph( 
             id='live-graph2',
             #animate = True
@@ -164,11 +166,18 @@ app.layout = html.Div([
         ),
 
 
-# -----------------------------------------------------------------
+# -----------------------------------------------------------------------------------------#
 
 ])
 
 ])
+
+
+#-------------------------------------test button ----------------------------------------#
+# only a test button to test deleting and hiding tabs
+# this is not need
+#---------------------delete -----------------------#
+
 
 @app.callback(
 [Output('t2', 'style'),Output('t2', 'selected_style')],
@@ -178,14 +187,28 @@ prevent_initial_call=True,
 def hide_tab1(_):
     return {"display": "none"}, {"display": "none"}
 
+#--------------------------------------------------#
+#-----------------------------------------------------------------------------------------#
 
 
 
-@app.callback(dash.dependencies.Output('live-update-text2', 'children'),
-              dash.dependencies.Input('graph-update2', 'n_intervals'))
+#-------------------------------------text value update-----------------------------------#
+
+@app.callback(dash.dependencies.Output('live-update-text', 'children'),
+              dash.dependencies.Input('graph-update', 'n_intervals'))
 def update_metrics(n):
-    t = timee.pop()
-    timee.append(t)
+    """
+    # I don't like this portion of code but at the time this 
+    # seemed like the easiest way to get just the lastest value added
+    # to the queue, going to try and find an easier and simplier way
+    # so its not removing and readding the value to the queue.
+    
+    t variable is : TIME
+    v variables is: Y (random) Value
+    """
+    
+    t = time.pop()
+    time.append(t)
     ti = t
 
     v = Y.pop()
@@ -198,14 +221,23 @@ def update_metrics(n):
 
     ]
 
-# -------------------------------- Graph Update TWO--------------------------
+#-------------------------------------------------------------------------------
+"""
+graph is split into 4 subplots
+the data being added is only random generated numbers
+the x axis used real datetime
+each graph as four seprate traces
+more traced can be added if added under the subplot of graph
 
+"""
+
+# -------------------------------- LIVE GRAPH Callback--------------------------
 
 
 
 @app.callback(
     Output('live-graph2', 'figure'),
-    Input('graph-update2', 'n_intervals'),
+    Input('graph-update2', 'n_intervals')
 
 
     #Input('box', 'value')
@@ -220,6 +252,7 @@ def update_graph_scatter2(n):
     X.append(X[-1]+1)
     y = randint(0,4)
     
+    #just test data
     Y.append(random.uniform(0,4))
     Y2.append(random.uniform(0,50))
     Y3.append(random.uniform(0,10))
@@ -228,31 +261,42 @@ def update_graph_scatter2(n):
    
    
 
-    data = {
+#     data = {
 
-        'time' : [],
-        'full': [],
-        'vis': [],
-        'lux': [],
-        'inf': []
+#         'time' : [],
+#         'full': [],
+#         'vis': [],
+#         'lux': [],
+#         'inf': []
 
-    }
+#     }
 
+     #x axis time data
     now = datetime.now()
-    timee.append(now)
+    time.append(now)
 
-    
+    #creates the subplots, size spacing ect.
     fig = make_subplots(rows=2, cols=2, vertical_spacing=0.1)
     fig['layout']['margin'] = {
         'l': 30, 'r': 10, 'b': 30, 't': 10
     }
     fig['layout']['legend'] = {'x': 0, 'y': 1, 'xanchor': 'left'}
-    #timee.append(timee[datetime.now()]-datetime.now()
+    #time.append(time[datetime.now()]-datetime.now()
+    
+    """
+    These are traces for creating the lines
+    there are currently 4 one for each graph
+    more can be added and possibly added to appear at the same time 
+    as the other traces
+    
+    these extra lines traces are intented to be synced up with buttons and dropdown box component values
+    
+    """
 
 
     t = plotly.graph_objs.Scatter(
 
-        x = list(timee),
+        x = list(time),
         y  = list(Y),
 
 
@@ -260,7 +304,7 @@ def update_graph_scatter2(n):
     )
     t2 = plotly.graph_objs.Scatter(
 
-        x = list(timee),
+        x = list(time),
         y  = list(Y2),
 
 
@@ -269,7 +313,7 @@ def update_graph_scatter2(n):
 
     t3 = plotly.graph_objs.Scatter(
 
-        x = list(timee),
+        x = list(time),
         y  = list(Y3),
 
 
@@ -278,7 +322,7 @@ def update_graph_scatter2(n):
 
     t4 = plotly.graph_objs.Scatter(
 
-        x = list(timee),
+        x = list(time),
         y  = list(Y4),
 
 
@@ -290,8 +334,9 @@ def update_graph_scatter2(n):
         t,
    
 
-
+#        
         ), 1, 1
+        # ^^^ subplot location ^^^^
     )
     fig.add_trace(
     go.Scatter(
@@ -311,23 +356,55 @@ def update_graph_scatter2(n):
     fig.add_trace(
 
     go.Scatter(
-        t,
+        t4,
         
 
     ), 2, 2
     )
 
     #fig.update_xaxes( autorange = True)
+    
+    #these is a premade theme by plotly can easily remove this theme or change it.
     fig.update_layout(template = 'plotly_dark' ) # xaxis=dict(range=[min(X),max(X)]))
     
     
-    #fig.update_xaxes(range=list(timee))
+    #fig.update_xaxes(range=list(time))
 
     
 
     return fig
 
-df = pd.DataFrame({"Card data 1": Y,  "Time": timee })
+
+
+#-----------------------------------------------------------------------------------------
+
+"""
+downloads as intended however data is localized in only the graph function. 
+need to figure out how to make data available to the download button
+this will possible need to be changed into a text file instead of csv
+the data file name will have to change.
+
+when it is added and used in the h.ahk box its better to have it display a date and time in the name
+and the name of the card the file is from. this will make it easier to log data and save it for 
+viewing at a later period of time. 
+
+may need another option to allow for viewing of previous logged data files to be uploaded and 
+viewed as a graph.
+
+this file should save something like this may need to be changed
+
+    Value (temp technically)       TIME
+    1                               date/time
+    2                               date/time
+    3                               date/time
+
+"""
+
+
+#-------------------------Download cvs button---------------------------------------------
+
+
+df = pd.DataFrame({"Card data 1": Y,  "Time": time })
 @app.callback(
     Output("download-dataframe-csv", "data"),
     Input("btn_csv", "n_clicks"),
@@ -335,6 +412,8 @@ df = pd.DataFrame({"Card data 1": Y,  "Time": timee })
 )
 def func(n_clicks):
     return dcc.send_data_frame(df.to_csv, "CurrentData.csv")
+
+#----------------------------------------------------------------------------------------
 
 
 
