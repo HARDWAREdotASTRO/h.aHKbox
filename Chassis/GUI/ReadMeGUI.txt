@@ -6,3 +6,5 @@ the graph also needs to be stylized and organized a little bit as well.
 graph needs more tabs (up to 10 for each card) these tabs needs to be hidden when cards are not available or not plugged into the h.ahk box. and the tabs that are available need their sizes to adjust automatically. 
 currently the check boxes, tabs and dropdown boxes don't do anything the 4 tabs contains the check box and drop down but not the.
 once done then the API and firmware need to work with this GUI everything is in python so everything should be in the same language.
+
+also just to specify the value in file name '081021' is refering to the date the file was created '08-10-21' it was edited since then.
