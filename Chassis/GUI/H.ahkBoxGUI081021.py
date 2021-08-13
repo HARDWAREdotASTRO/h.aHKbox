@@ -175,7 +175,7 @@ app.layout = html.Div([
 
 #-------------------------------------test button ----------------------------------------#
 # only a test button to test deleting and hiding tabs
-# this is not need
+# this is not needed
 #---------------------delete -----------------------#
 
 
@@ -198,7 +198,7 @@ def hide_tab1(_):
               dash.dependencies.Input('graph-update', 'n_intervals'))
 def update_metrics(n):
     """
-    # I don't like this portion of code but at the time this 
+    # I don't like this portion of code  its inefficent but at the time this 
     # seemed like the easiest way to get just the lastest value added
     # to the queue, going to try and find an easier and simplier way
     # so its not removing and readding the value to the queue.
@@ -243,7 +243,7 @@ more traced can be added if added under the subplot of graph
     #Input('box', 'value')
     )
 
-#value' goes in the update function
+
 def update_graph_scatter2(n):
 
 
@@ -356,7 +356,7 @@ def update_graph_scatter2(n):
     fig.add_trace(
 
     go.Scatter(
-        t4,
+        t,
         
 
     ), 2, 2
@@ -369,6 +369,17 @@ def update_graph_scatter2(n):
     
     
     #fig.update_xaxes(range=list(time))
+    '''
+    
+    #this makes this accessable to the 'func' function
+    #be cautious this variable is global to all functions and may cause shared data issues
+    #current this only displays the Y first Y values and the X time it does not store the other variables
+    #this can easily change and if you want to store all values or more than twenty one way is to create a new array
+    # and append all the current Y and X values (x and Y arrays will ahve to be separate) and can keep a track of all the data not just the current twenty values
+    
+    '''
+    global df 
+    df = pd.DataFrame({"Card data 1": Y,  "Time": timee })
 
     
 
@@ -379,10 +390,6 @@ def update_graph_scatter2(n):
 #-----------------------------------------------------------------------------------------
 
 """
-downloads as intended however data is localized in only the graph function. 
-need to figure out how to make data available to the download button
-this will possible need to be changed into a text file instead of csv
-the data file name will have to change.
 
 when it is added and used in the h.ahk box its better to have it display a date and time in the name
 and the name of the card the file is from. this will make it easier to log data and save it for 
