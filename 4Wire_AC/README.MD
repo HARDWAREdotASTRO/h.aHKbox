@@ -1,5 +1,5 @@
 <h1>4 Wire AC Expansion Card</h1>
-<br><br>
+
 Documentation of all firmware (in C++ for Teensy) and circuit designs for WAG implemented solution to a 4 wire AC expansion card under the H.aHK Box Project.
 <br><br>
 
