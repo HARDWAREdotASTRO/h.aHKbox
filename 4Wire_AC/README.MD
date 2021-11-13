@@ -4,10 +4,10 @@ Documentation of all firmware (in C++ for Teensy) and circuit designs for WAG im
 <br><br><br>
 
 <h4>Project Background:</h4>
-<br><br>
+<br>
 A 4 wire AC temperature measurement circuit is proposed for interface between the H.aHK Box (Hardware.astronomy Housekeeping Box) and the Zeus-2 Spectrometer <sup>a</sup>. Specifically, the Zeus-2 Spectrometer temperature region of interest in application of this circuit operates down to about 100 mK. The Zeus-2 spectrometer uses Lake Shore Cryogenics Interchangeable ROX sensors mainly, but also uses some Germanium GR300 sensors as well <sup>b</sup>.
 <br><br>
-<b>Design Specifications</b>
+<b>Design Specifications</b><br>
 - System reports temperature value at up to 10 sps
 - Obtain resolution of $\pm$ 10mk in sub-milliKelvin scale and 1K at higher temperature ranges
 - Optimize (minimize) power dissipation across sensor to minimize heat dissipation into low temerature region
