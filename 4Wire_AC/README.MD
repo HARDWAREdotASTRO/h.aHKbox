@@ -19,7 +19,8 @@ A 4 wire AC temperature measurement circuit is proposed for interface between th
 <br><br>
 
 <h3>Project Staff</h3>
-- Stephen Shaw (General Engineering, Electronics), May 2020 - May 2022
+- Stephen Shaw (General Engineering, Electronics)
+    - May 2020 - May 2022
 
 <br><br>
 <h3>References</h3>
