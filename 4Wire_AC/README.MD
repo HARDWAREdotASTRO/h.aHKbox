@@ -1,7 +1,7 @@
 <h1>4 Wire AC Expansion Card</h1>
 <br><br>
 Documentation of all firmware (in C++ for Teensy) and circuit designs for WAG implemented solution to a 4 wire AC expansion card under the H.aHK Box Project.
-<br><br><br>
+<br><br>
 
 <h4>Project Background:</h4>
 <br>
@@ -16,7 +16,7 @@ A 4 wire AC temperature measurement circuit is proposed for interface between th
 - Optically isolated sensor from digital circuitry <br>
 - Operature through +5V and +24V lines <br>
 - Interface with H.aHK Box systems and software/firmware communication protocols <br>
-
+<br><br>
 <sup>a</sup> - https://www.researchgate.net/publication/47351146_ZEUS-2_A_second_generation_submillimeter_grating_spectrometer_for_exploring_distant_galaxies
 <br>
 <sup>b</sup> - https://www.lakeshore.com/products/categories/temperature-products/cryogenic-temperature-sensors
