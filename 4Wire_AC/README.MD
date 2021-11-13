@@ -5,7 +5,7 @@ Documentation of all firmware (in C++ for Teensy) and circuit designs for WAG im
 
 <h4>Project Background:</h4>
 <br><br>
-A 4 wire AC temperature measurement circuit is proposed for interface between the H.aHK Box (Hardware.astronomy Housekeeping Box) and the Zeus-2 Spectrometer $ ^{\alpha}$. Specifically, the Zeus-2 Spectrometer temperature region of interest in application of this circuit operates down to about 100 mK. The Zeus-2 spectrometer uses Lake Shore Cryogenics Interchangeable ROX sensors mainly, but also uses some Germanium GR300 sensors as well $ ^{\beta}$. 
+A 4 wire AC temperature measurement circuit is proposed for interface between the H.aHK Box (Hardware.astronomy Housekeeping Box) and the Zeus-2 Spectrometer <sup>a</sup>. Specifically, the Zeus-2 Spectrometer temperature region of interest in application of this circuit operates down to about 100 mK. The Zeus-2 spectrometer uses Lake Shore Cryogenics Interchangeable ROX sensors mainly, but also uses some Germanium GR300 sensors as well <sup>b</sup>
 
 <u>Design Specifications</u>
 - System reports temperature value at up to 10 sps
@@ -17,5 +17,5 @@ A 4 wire AC temperature measurement circuit is proposed for interface between th
 - Operature through +5V and +24V lines
 - Interface with H.aHK Box systems and software/firmware communication protocols
 
-($ ^{\alpha}$) - https://www.researchgate.net/publication/47351146_ZEUS-2_A_second_generation_submillimeter_grating_spectrometer_for_exploring_distant_galaxies
-($ ^{\beta}$) - https://www.lakeshore.com/products/categories/temperature-products/cryogenic-temperature-sensors
+<sup>a</sup> - https://www.researchgate.net/publication/47351146_ZEUS-2_A_second_generation_submillimeter_grating_spectrometer_for_exploring_distant_galaxies
+<sup>b</sup> - https://www.lakeshore.com/products/categories/temperature-products/cryogenic-temperature-sensors
