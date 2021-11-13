@@ -9,7 +9,7 @@ A 4 wire AC temperature measurement circuit is proposed for interface between th
 <br><br>
 <h3>Design Specifications</h3>
 - System reports temperature value at up to 10 sps <br>
-- Obtain resolution of $\pm$ 10mk in sub-milliKelvin scale and 1K at higher temperature ranges <br>
+- Obtain resolution of &#177; 10mk in sub-milliKelvin scale and &#177; 1K at higher temperature ranges <br>
 - Optimize (minimize) power dissipation across sensor to minimize heat dissipation into low temerature region <br>
 - Optimize circuit for low component count <br>
 - Digitize read in and output to circuit (frequency output, etc.) <br>
