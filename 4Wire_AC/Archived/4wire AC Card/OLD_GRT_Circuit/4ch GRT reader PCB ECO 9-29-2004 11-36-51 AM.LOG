@@ -1,6 +1,0 @@
-Removed Pin From Net: NetName=-5V Pin=C16-1
-Change Component Comment : Designator=C14 Old Comment=.1uF New Comment=in IC socket - GND to pin9
-Added Pin To Net: NetName=GND Pin=C16-1
-Added Pin To Net: NetName=-5V Pin=C16-2
-Added Pin To Net: NetName=-5V Pin=R35-2
-Added Pin To Net: NetName=-5V Pin=SC1-7
