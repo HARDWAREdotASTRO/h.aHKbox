@@ -1,8 +1,9 @@
 /*
-   Resistance Bridge Test Code
+   RMS Read in test code
    WAG _ Project H.aHK Box _ 4-wire AC Daugter Card
-   Version 3.0
+   Version 1.0
    S. Shaw
+   1/30/2022
 */
 
 #include <Adafruit_NAU7802.h>
@@ -26,10 +27,21 @@ void setup() {
   if (! nau.begin()) {
     Serial.println("Failed to find NAU7802");
   }
-  Serial.println("Found NAU7802");
+  // Serial.println("Found NAU7802");
 
   nau.setLDO(NAU7802_EXTERNAL);
   nau.setGain(NAU7802_GAIN_1);
+  Serial.print("Gain set to ");
+  switch (nau.getGain()) {
+    case NAU7802_GAIN_1:  Serial.println("1x"); break;
+    case NAU7802_GAIN_2:  Serial.println("2x"); break;
+    case NAU7802_GAIN_4:  Serial.println("4x"); break;
+    case NAU7802_GAIN_8:  Serial.println("8x"); break;
+    case NAU7802_GAIN_16:  Serial.println("16x"); break;
+    case NAU7802_GAIN_32:  Serial.println("32x"); break;
+    case NAU7802_GAIN_64:  Serial.println("64x"); break;
+    case NAU7802_GAIN_128:  Serial.println("128x"); break;
+  }
   nau.setRate(NAU7802_RATE_320SPS);
 
   // Take 10 readings to flush out readings
@@ -52,6 +64,7 @@ void setup() {
   nau.setChannel(NAU7802_CH1);
 
   rms_sum = 0;
+  i = 0;
 }
 
 
@@ -69,8 +82,11 @@ void loop() {
         rms_sum = voltRead[k] * voltRead[k] + rms_sum;
       }
       i = 0;
-      float rms_volt = sqrt(rms_sum);
+      float rms_volt = sqrt(rms_sum/320.0);
+      Serial.println("RMS_Voltage");
+      Serial.println("");
       Serial.println(rms_volt, 6);
+      Serial.println("");
       rms_sum = 0;
     }
     i = i + 1;
