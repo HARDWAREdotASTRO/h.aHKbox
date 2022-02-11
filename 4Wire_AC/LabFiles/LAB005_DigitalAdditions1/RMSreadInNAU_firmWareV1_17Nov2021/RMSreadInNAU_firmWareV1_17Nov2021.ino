@@ -10,8 +10,8 @@
 */
 
 // User Inputs
-float freq_sin = 20; // Frequency of Sine Wave Modulation (Hz), [1, 160] range allowed given Nyquist sampling rate of 2 samples per period, 320 max SPS of ADC
-int Read_Out_Rate = 4; // integer used for Read Out Rate of code, or frequency of an RMS value being reported
+float freq_sin = 10; // Frequency of Sine Wave Modulation (Hz), [1, 160] range allowed given Nyquist sampling rate of 2 samples per period, 320 max SPS of ADC
+int Read_Out_Rate = 1; // integer used for Read Out Rate of code, or frequency of an RMS value being reported
 
 // preset/calcuated values
 float rms_sum, tim; //rms sum for RMS calculations, tim for outputting sinwave based on time
@@ -69,40 +69,44 @@ void setup() {
 
 
 void loop() {
-  
-  // prototype code: delay until we are at wave peak
-  tim = micros(); //Calculate microseconds
-  // If current time is not lined up approximatly at 1/4 the sine wave, or with the first peak of a cycle, delay until alligned
-  if ((int(tim) % int(period * 1000000)) > (period * 250100) | (int(tim) % int(period * 1000000)) < (period * 249900)) {
-    delayMicroseconds(int(period * 1000000) - (int(tim) % int(period * 1000000)) + period * 250000);
-    Serial.print("Wait!!!!");
-  }
-  //tim = micros();
-  //Serial.println(int(tim) % int(period * 1000000));
+  /*
+    // prototype code: delay until we are at wave peak
+    tim = micros(); //Calculate microseconds
+    // If current time is not lined up approximatly at 1/4 the sine wave, or with the first peak of a cycle, delay until alligned
+    if ((int(tim) % int(period * 1000000)) > (period * 250100) | (int(tim) % int(period * 1000000)) < (period * 249900)) {
+      delayMicroseconds(int(period * 1000000) - (int(tim) % int(period * 1000000)) + period * 250000);
+      //Serial.print("Wait!!!!");
+    }
+    //tim = micros();
+    //Serial.println(int(tim) % int(period * 1000000));
+  */
 
-  // While loop to read in values and keep track of RMS sum, reiterates each read-in window
-  while (frame <= window_length)
+  tim = micros() / 1000000.0; //Calculate Seconds
+  Sin(freq_sin, tim, period); // Run next sinwave output voltage level based on frequency and time
+
+  if (frame <= window_length)
   {
-    if (nau.available() == 1) {
+    if (nau.available() == 1)
+    {
       rms_sum = rms_sum + sq(((nau.read() / 8388608.0) * 2.5));
       frame = frame + 1; // Update frame # for next ADC measurement
     }
-    tim = micros() / 1000000.0; //Calculate Seconds
-    Sin(freq_sin, tim, period); // Run next sinwave output voltage level based on frequency and time
   }
 
-  //Calculate final RMS value and output
-  float rms_volt = sqrt(rms_sum / window_length);
-  Serial.println("RMS_Voltage");
-  Serial.println("");
-  Serial.println(rms_volt, 6);
-  Serial.println("");
-  //Serial.print(tim, 7);
-  //Serial.println("");
+  else if (frame > window_length) {
+    //Calculate final RMS value and output
+    float rms_volt = sqrt(rms_sum / window_length);
+    Serial.println("RMS_Voltage");
+    Serial.println("");
+    Serial.println(rms_volt, 6);
+    Serial.println("");
+    //Serial.print(tim, 7);
+    //Serial.println("");
 
-  rms_sum = 0;
-  frame = 1;//reinitialize frame integer to 0 for next window of measurements/ next RMS value
-
+    rms_sum = 0;
+    frame = 1; //reinitialize frame integer to 0 for next window of measurements/ next RMS value
+  }
+  delay(3);
 }
 
 
@@ -112,7 +116,7 @@ void loop() {
 void Sin(float freq_m, float tim, float period) {
   //Full resolution is 4095, over 3.3 V -> 0.00080586 V per bit
   // Currently set to 500mV amplitude, 2V offset
-  
+
   float window_tim = int(tim * 100000) % int(period * 100000); // window time in us
   float sin_values[] = {0.000000, 0.006142, 0.012284, 0.018425, 0.024565, 0.030705, 0.036843, 0.042980, 0.049116, 0.055249, 0.061381, 0.067510, 0.073636, 0.079760, 0.085881, 0.091999, 0.098113,
                         0.104223, 0.110330, 0.116432, 0.122530, 0.128623, 0.134712, 0.140795, 0.146873, 0.152946, 0.159012, 0.165073, 0.171128, 0.177176, 0.183217, 0.189251, 0.195279,
@@ -179,7 +183,7 @@ void Sin(float freq_m, float tim, float period) {
                         -0.183217, -0.177176, -0.171128, -0.165073, -0.159012, -0.152946, -0.146873, -0.140795, -0.134712, -0.128623, -0.122530, -0.116432, -0.110330, -0.104223, -0.098113, -0.091999,
                         -0.085881, -0.079760, -0.073636, -0.067510, -0.061381, -0.055249, -0.049116, -0.042980, -0.036843, -0.030705, -0.024565, -0.018425, -0.012284, -0.006142, 0.000000
                        };
-                       
+
   float valWrite = sin_values[int(1024 * (window_tim / (period * 100000)))]  * 620.0 + 2481.0;
   analogWrite(A14, (int)valWrite);
 }
