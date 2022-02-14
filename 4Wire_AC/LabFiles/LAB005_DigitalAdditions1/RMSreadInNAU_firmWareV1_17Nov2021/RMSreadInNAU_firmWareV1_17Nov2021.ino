@@ -3,22 +3,23 @@
    WAG _ Project H.aHK Box _ 4-wire AC Daugter Card
    Version 1.1
    S. Shaw
-   2/8/2022
+   2/13/2022
 
    Outputs a sine wave with user defined frequency to Teensy DAC hardware
    Calculates and outputs an RMS Voltage value at a user defined Read_Out_Rate
 */
 
 // User Inputs
-float freq_sin = 10; // Frequency of Sine Wave Modulation (Hz), [1, 160] range allowed given Nyquist sampling rate of 2 samples per period, 320 max SPS of ADC
-int Read_Out_Rate = 1; // integer used for Read Out Rate of code, or frequency of an RMS value being reported
+float freq_sin = 30; // Frequency of Sine Wave Modulation (Hz), [1, 160] range allowed given Nyquist sampling rate of 2 samples per period, 320 max SPS of ADC
+int Num_Cycles = 30; // integer used for # of cycles per read window or the Read Out Rate.
 
 // preset/calcuated values
 float rms_sum, tim; //rms sum for RMS calculations, tim for outputting sinwave based on time
 int frame; //integer used to keep track of what frame in a given window the current reading is
-int window_length = 320 / Read_Out_Rate; //integer calculated to provide the # of frames, or readings, that will be used per RMS calculation (SPS/Read Out Rate)
-float twopi = 3.14159 * 2; //For sin wave generation
 float period = 1 / freq_sin; // Calculate period of sine wave
+int window_length = (period * Num_Cycles) / 0.003125; //integer calculated to provide the # of frames, or readings, that will be used per RMS calculation (SPS/Read Out Rate)
+float twopi = 3.14159 * 2; //For sin wave generation
+int tim_old = 0;
 
 // Imports ADC library and defines hardware-to-software definition for library
 #include <Adafruit_NAU7802.h>
@@ -61,6 +62,10 @@ void setup() {
   // set dynamic variable starting values
   rms_sum = 0;
   frame = 1;
+  Serial.println("");
+  Serial.println(window_length);
+  Serial.println("Window Length ^^");
+  Serial.println("");
 }
 
 
@@ -69,6 +74,7 @@ void setup() {
 
 
 void loop() {
+
   /*
     // prototype code: delay until we are at wave peak
     tim = micros(); //Calculate microseconds
@@ -83,32 +89,36 @@ void loop() {
 
   tim = micros() / 1000000.0; //Calculate Seconds
   Sin(freq_sin, tim, period); // Run next sinwave output voltage level based on frequency and time
-
-  if (frame <= window_length)
+  if ((tim*1000000) - tim_old >= 1950) //trying to get to 3125 microseconds or 3.125 millis between readings
   {
-    if (nau.available() == 1)
+    if (frame <= window_length)
     {
-      rms_sum = rms_sum + sq(((nau.read() / 8388608.0) * 2.5));
-      frame = frame + 1; // Update frame # for next ADC measurement
+      if (nau.available() == 1)
+      {
+        rms_sum = rms_sum + sq(((nau.read() / 8388608.0) * 2.5));
+        frame = frame + 1; // Update frame # for next ADC measurement
+        //Serial.println(tim, 6);
+        //Serial.println((nau.read() / 8388608.0) * 2.5);
+      }
     }
+
+    else if (frame > window_length) {
+      //Calculate final RMS value and output
+      float rms_volt = sqrt(rms_sum / window_length);
+      Serial.println("RMS_Voltage");
+      Serial.println("");
+      Serial.println(rms_volt, 6);
+      Serial.println("");
+      //Serial.print(tim, 7);
+      //Serial.println("");
+
+      rms_sum = 0;
+      frame = 1; //reinitialize frame integer to 0 for next window of measurements/ next RMS value
+    }
+    tim_old = micros();
   }
 
-  else if (frame > window_length) {
-    //Calculate final RMS value and output
-    float rms_volt = sqrt(rms_sum / window_length);
-    Serial.println("RMS_Voltage");
-    Serial.println("");
-    Serial.println(rms_volt, 6);
-    Serial.println("");
-    //Serial.print(tim, 7);
-    //Serial.println("");
-
-    rms_sum = 0;
-    frame = 1; //reinitialize frame integer to 0 for next window of measurements/ next RMS value
-  }
-  delay(3);
 }
-
 
 
 // Sine Wave Generator Code function: Uses a table of 1024 sine wave values from [0, 1] as ratios for computing correct DAC output.
