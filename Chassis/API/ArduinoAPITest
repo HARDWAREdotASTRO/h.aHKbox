@@ -1,0 +1,232 @@
+// Include the Wire library for I2C
+#include <Wire.h>
+
+// LED on pin 13
+char msg;
+int yesNo;
+byte me = 0x08;
+int randomBytes;
+int randomVal;
+
+void setup() {
+  // Join I2C bus as slave with address 8
+  Wire.begin(0x08);
+  Serial.begin(9600);
+
+  // Call receiveEvent when data received
+
+  //Wire.onReceive(receiveEvent);
+  Wire.onRequest(sendData); 
+ // Wire.onReceive(receiveData);
+  randomSeed(analogRead(0));
+
+}
+
+
+void receiveData(int byteCount) {
+/*
+
+  while(Wire.available()){
+    for(int i = 0; i < byteCount; i++){
+    byte c = Wire.read();
+    Serial.print("I am reading: ");
+    Serial.print(c, BIN);
+    Serial.println();
+  //  Serial.println("yes no value:" +  yesNo);
+    //sendData(c);
+    }
+  }
+*/
+
+}
+
+// Function that executes whenever data is received from master
+
+  void sendData(char msg){
+
+    
+  //   if(msg = 0x48){
+    //  int yesNo = random(0,1);
+      
+      
+   // }
+   if(msg = 0x08){
+   // while( yn = 0){
+    if(yesNo == 0){
+      //YES!! Send data!
+      //send two bytes of information as temp place holder test value
+
+        randomBytes = random(3,16);
+      
+        Wire.write(0x18);
+        Wire.write(randomBytes);
+        delay(50);
+    }
+
+        if(msg == 0xa8){
+          int temp = randomBytes;
+          int data [temp] = {1};
+
+          for(int k = 0; k < temp; k++){
+            data[k] = {};
+            for(int j = 0; j< temp; j++) {
+        
+              int data[j] = {random(0,100)};
+              //Wire.write(0x18);
+              //Wire.write(randomBytes);
+
+            }
+            //Wire.write(data[k]);
+          
+          }
+
+            for(int x = 1; x < temp; x++){
+               Wire.write(data[x]);
+               delay(100);
+            }
+          
+        }
+          
+
+
+
+          
+        //delay(100);
+        /*
+        if(msg = 0xa8){
+          
+          int data[4] = {0x38, 0x02, 0xf4, 0x05f};
+          for(int i =0; i < 4; i++){
+            Wire.write(data[i]);
+          
+        }
+        */
+        //delay(100);
+      
+   
+  //}
+  // while()
+   if(yesNo == 1){
+// No! there is not data to be sent
+// wait for Leader to send ack and move on
+    Wire.write(0x18);
+    Wire.write(0x80);
+    delay(100);
+   
+  }
+    }
+   //}
+
+  
+//responds to initall poll function
+/*
+    if(msg = 0x08){ //was 0x01
+     // byte yesNo =  1; //random(0,1);
+
+      if (yesNo == 1){
+        int data [2] = {24, 2};
+        for (int i = 0; i < 2; i++){
+          Wire.write(data[i]);
+        }
+
+       // Serial.println((int)msg);
+       // Wire.write(2);
+      }
+      else if (yesNo == 0){
+        Wire.write(24);
+        Wire.write(128);
+      }
+     
+    }
+ 
+    
+
+
+//responds with 17 or 00010001
+  if((0xf0 && msg)== 0xa0){
+    //Wire.write(data[i]);
+       int data [2] = {86, 42};
+        for (int i = 0; i < 2; i++){
+          Wire.write(data[i]);
+        }
+
+  }
+    if(msg = 0x61){ //0b0110 0001
+
+      byte bootresponse = 0x11;
+     // Serial.println("boot response");
+      Wire.write(bootresponse);
+
+
+
+
+    }
+//      cc = Wire.read();
+//      Serial.println(cc);
+
+    if (msg = 0b00000001) {
+
+
+   //   byte yesNo =  random(0,1);
+/*
+      if(yesNo = 0){
+        byte yes = 0b00010001;
+        byte information = 0b00100000;
+        
+        Wire.write(information);
+      //  r = Wire.read();
+        if (msg = 0b10000001 ) {
+          byte me = 0b00010000;
+          Serial.println(msg);
+       //   byte randomvalue = random(1,12);
+        //  Serial.println(randomvalue);
+         // Wire.write((me<< 8) | randomvalue);
+         // ack = Wire.read();
+          if (msg = 72) {
+            Serial.println("value received");
+            
+          }
+          
+        }
+        
+      }
+//      if(yesNo = 1) {
+// this value here writes the 9 value
+   //     Wire.write(10000000);
+        
+   //   }
+  //    else {
+        //Wire.write("7");
+   //   }
+      
+      */
+
+  //  }
+
+
+   // }
+  }
+
+
+void loop() {
+
+
+
+  yesNo = random(0,2);
+
+  //Serial.println(yesNo);
+ // delay(1000);
+
+   // for (int i = 0; i < randomBytes; i++){
+    //int randomVal = random(0,254);
+
+    //}
+
+ // if(yesNo == 1){
+ //   randomBytes = random(3, 20);
+ //Serial.println(randomBytes);
+ delay(100);
+    
+  //}
+
+}
