@@ -1,7 +1,7 @@
 import time
 import os
 #import RPi.GPIO as GPIO
-
+from struct import*
 from smbus import SMBus
 leader = 0x00
 bus = SMBus(1)
@@ -90,30 +90,27 @@ class Leader:
         while i <= 10:
             try:
                 self.write(i, [i]) #12 was in place but changed it to the I value 
-                response = self.read(i, 1)
+                response = [self.read(i, 1)]
            # response = bus.read_i2c_block_data(0x04, 0, 2)
-                print(response)
-                """
-                might need to add in a hard coded or fixe configuration
-                calibration table
-                
-                test metro
-                To Do:
-                
-                test to run met run metro as both a leader and follower.
-                test that circuit python functions are compatable with rasperby pia nd other pythond code
-                """
-            # note: does still communcate w/o hexadecimal notation
+                #print(response[0)
+
+
                 print(response[0])
-                print(bin(lResponse&0xff))
-                if response[0] == (i| lResponse): #int(response[0]) ==  0x13: #followerResponse | bin(i):
+                temp = bytes(response[0])
+                print(type(temp))
+                print(type(bytes(0x10 | i)))
+                print(bytes(temp))
+                print(0x10 | i)
+                print(bytes([0x10 | i]))
+               # print(bin(lResponse&0xff))
+                if temp == bytes([0x10 | i]): #int(response[0]) ==  0x13: #followerResponse | bin(i):
                     availableAddresses.append(i)
                     self.write(i, [ack | i])  # boot is sending Ack response to tell its been processes
                     print("Card slot "+str(i)+ " responded")
                     i = i + 1
                     continue
                 else:
-                    print("Invalid Response: \n Value Received: " + bin(response[0]) +"\n Value Expected: " + bin(i| lResponse))
+                    print("Invalid Response: \n Value Received: " + str(response[0]) +"\n Value Expected: " + bin(i| lResponse))
                     i = 1+i
                     continue
             except OSError:        
@@ -155,8 +152,12 @@ class Leader:
         counter = 0
         counter = counter + 1
         for a in addresses:
-            print("loop number: " + str(counter))
-            self.write(a, [0xff & a] ) #(lRequest | address))
+           ## print("loop number: " + str(counter))
+           
+           # 6-17-18 using a special poll header of 0x5
+            #print(0x50 | a)
+            self.write(a, [ 0x50 | a] ) #(lRequest | address))
+            time.sleep(.25)
             #print(bin(0xff & a))
             # will wait for a response from the card
             #if not response it should skip this card
@@ -166,7 +167,8 @@ class Leader:
 
 
             response = self.read(a, 2) #commented out addresses  where a currently is
-            time.sleep(.5)
+           # print("first response back: " + str(response[1]))
+            time.sleep(.25)
             # response byte 1 will contain header and card number, byte 2 contains value yes or no and how many bytes
              #   i = i +1;
             #
@@ -174,35 +176,39 @@ class Leader:
           #  for i in response:
            #     print("response " + str(i) + "binary: " + bin(i))
             yesNo = response[1] #^ flagBit
+            #print(yesNo)
            # print("yes /no value:" + str(yesNo) + " binary:" + bin(yesNo & 0xff) + " \n raw response [0]: \n" + str(response[0]) + " binary: " + bin(response[0] & 0xff)+ " \n raw response[1]: \n" + str(response[1]) + " binary: " + bin(response[1] & 0xff))
             # note: REMEMBER  to add a part of code to make sure its getting data from the right card
             #counter = counter + 1;
-            print("\n")
+            #print("\n")
             if(yesNo < 128):
                 print("information is being recieved..")
               #  print(response[0])
               #  print(response[1])
                 byteRequest = response[1] 
-                self.write(a,[dataRequest | a ]) # changed addresses[a] to just 'a' in this line it will write to the arduino the number of bytes it wants.
-                information = self.read(a, byteRequest ) # changed addresses[a] to just 'a' removed: response << 8 from this line
-                print("data received from " + str(a) + " binary: " + bin(a) + ": \n" + str(information) )
-                time.sleep(1)
+                print(type(byteRequest))
+                self.write(a,[0xa0 | a ]) # changed addresses[a] to just 'a' in this line it will write to the arduino the number of bytes it wants.
+                information = unpack("BBBBBB", bytes(self.read(a, int(byteRequest) ))) # changed addresses[a] to just 'a' removed: response << 8 from this line
+                print("data received from card Type " + str(a) + " binary: " + bin(a) + ": \n" + str(information) )
+              
+                time.sleep(.5)
                 # ack knowledges that information hAS BEEN recieved
                 self.write(a ,[a | ack])
+                
                 print(a | ack)
                 #need multiple read functions, 
                 #use the number of bytes to determine what read function to use.
                 # add info for after the byte request
                 print("\n")
-                print("\n")
+               # print("\n")
                 return information #/// commented out temp to see if its the problem for no loops note: not responsible for breaking the loop
         #counter = counter + 1
                 
-            if(yesNo >= 128): #friendly reminder that 255 means empty slot. trying with both 255 and 0 see whihc works correctly
+            if((yesNo & 0x80) == 128): #friendly reminder that 255 means empty slot. trying with both 255 and 0 see whihc works correctly
                 print('no information!')
                 print("response value \n" + str(response[1]))
                 print("\n")
-                print("\n")
+               # print("\n")
                 return
             #counter = counter + 1   
             # time.sleep(.1)
