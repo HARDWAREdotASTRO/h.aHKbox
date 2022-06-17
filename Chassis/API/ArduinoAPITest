@@ -1,15 +1,21 @@
 // Include the Wire library for I2C
 #include <Wire.h>
 
+
+
+
 // LED on pin 13
 char msg;
 int yesNo;
 byte me = 0x08;
 int randomBytes;
 int randomVal;
+bool alreadySent;
+bool send;
+int funcVal;
 
 void setup() {
-  // Join I2C bus as slave with address 8
+  // Join I2C bus as follower with address 8
   Wire.begin(0x08);
   Serial.begin(9600);
 
@@ -17,73 +23,152 @@ void setup() {
 
   //Wire.onReceive(receiveEvent);
   Wire.onRequest(sendData); 
- // Wire.onReceive(receiveData);
+  Wire.onReceive(receiveData);
   randomSeed(analogRead(0));
 
 }
 
+template <typename T_ty> struct TypeInfo { static const char * name; };
+template <typename T_ty> const char * TypeInfo<T_ty>::name = "unknown";
+
+// Handy macro to make querying stuff easier.
+#define TYPE_NAME(var) TypeInfo< typeof(var) >::name
+
+// Handy macro to make defining stuff easier.
+#define MAKE_TYPE_INFO(type)  template <> const char * TypeInfo<type>::name = #type;
+
+// Type-specific implementations.
+MAKE_TYPE_INFO( int )
+MAKE_TYPE_INFO( float )
+MAKE_TYPE_INFO( short )
+MAKE_TYPE_INFO( byte )
+MAKE_TYPE_INFO(char)
 
 void receiveData(int byteCount) {
-/*
+
 
   while(Wire.available()){
     for(int i = 0; i < byteCount; i++){
     byte c = Wire.read();
-    Serial.print("I am reading: ");
-    Serial.print(c, BIN);
-    Serial.println();
-  //  Serial.println("yes no value:" +  yesNo);
-    //sendData(c);
+      Serial.print("I am reading: ");
+      Serial.print(c, BIN);
+      Serial.println(TYPE_NAME(c));
+      Serial.println();
+      if(c == me){
+        //sendData(c);
+        //Wire.write(0x18);
+        send = true;
+        alreadySent = false;
+        funcVal = 0;
+        
+        
+      }
+      if(c == 0x58){
+
+        send = false;
+        alreadySent = true;
+        funcVal = 1;
+        
+      }
+      if(c == 0xa8){
+
+        funcVal = 2;
+      }
+      //Serial.println("yes no value:" +  yesNo);
+      //sendData(c);
     }
   }
-*/
+
 
 }
 
 // Function that executes whenever data is received from master
 
-  void sendData(char msg){
+  void sendData(byte msg){
+  //  Wire.write(0x18);
 
-    
-  //   if(msg = 0x48){
-    //  int yesNo = random(0,1);
-      
-      
-   // }
-   if(msg = 0x08){
+   if(msg == byte(0x08)){
+    //Serial.print("1st if statement");
    // while( yn = 0){
+  // yesNo = 0; //random(0,2);
+   Wire.write(byte(0x18));
+  // test = true;
+   }
+   if(funcVal == 0){
+    Wire.write(0x18);
+    Wire.write(0x06);
+    send = false;
+    delay(100);
+    
+   }
+   if (funcVal == 1){
+    Serial.println(" poll ");
+    Wire.write(0x38);
+    Wire.write(0x06);
+    alreadySent = false;
+    delay(100);
+   }
+   if(funcVal == 2){
+
+    int data [6] = {0x38, 45, 203, 6, 65, 222};
+    for(int i = 0; i< 6; i++){
+        Wire.write(data[i]);
+        delay(100);
+    }
+   }
+   /*
     if(yesNo == 0){
+      Serial.print("the only yesNo function");
       //YES!! Send data!
       //send two bytes of information as temp place holder test value
 
-        randomBytes = random(3,16);
-      
-        Wire.write(0x18);
-        Wire.write(randomBytes);
-        delay(50);
+        //randomBytes = random(3,16);
+      // logistical response
+      //  Wire.write(0x18);
+        // amount of data to needing to send
+      //  Wire.write(6);
+       // alreadySent = true;
+      //  delay(50);
     }
+    
+       if(yesNo == 1 ){
+// No! there is not data to be sent
+// wait for Leader to send ack and move on
+        Wire.write(0x18);
+        Wire.write(0x80);
+        delay(50);
+   
+      }
+      */
+      byte t = 0xa8;
+   
 
-        if(msg == 0xa8){
-          int temp = randomBytes;
-          int data [temp] = {1};
-
+        if(msg == t){
+          Serial.println(":D");
+          int temp = 6;//randomBytes;
+          int data [temp] = {0x38, 4, 26, 45, 22, 5};
+/*
           for(int k = 0; k < temp; k++){
-            data[k] = {};
-            for(int j = 0; j< temp; j++) {
+            data[k] = {random(0,100)};
+         */   
+           // for(int j = 0; j< temp; j++) {
         
-              int data[j] = {random(0,100)};
+            //  int data[j] = {random(0,100)};
               //Wire.write(0x18);
               //Wire.write(randomBytes);
 
-            }
+            //}
             //Wire.write(data[k]);
           
-          }
-
-            for(int x = 1; x < temp; x++){
-               Wire.write(data[x]);
-               delay(100);
+            for(int i = 0; i < temp; i++){
+               Wire.write(data[i]);
+               //alreadySent = false;
+               //delay(100);
+               
             }
+           // alreadySent = false;
+        }
+   //}
           
         }
           
@@ -106,15 +191,8 @@ void receiveData(int byteCount) {
    
   //}
   // while()
-   if(yesNo == 1){
-// No! there is not data to be sent
-// wait for Leader to send ack and move on
-    Wire.write(0x18);
-    Wire.write(0x80);
-    delay(100);
-   
-  }
-    }
+
+    
    //}
 
   
@@ -205,14 +283,15 @@ void receiveData(int byteCount) {
 
 
    // }
-  }
+  //}
+// Generic catch-all implementation.
 
 
 void loop() {
 
 
 
-  yesNo = random(0,2);
+
 
   //Serial.println(yesNo);
  // delay(1000);
@@ -225,7 +304,7 @@ void loop() {
  // if(yesNo == 1){
  //   randomBytes = random(3, 20);
  //Serial.println(randomBytes);
- delay(100);
+//delay(100);
     
   //}
 
