@@ -1,5 +1,7 @@
-import time
 import os
+import subprocess
+import re
+import time
 #import RPi.GPIO as GPIO
 from struct import*
 from smbus import SMBus
@@ -176,6 +178,9 @@ class Leader:
           #  for i in response:
            #     print("response " + str(i) + "binary: " + bin(i))
             yesNo = response[1] #^ flagBit
+            #while i < yesNo:
+            unpackString = ''.join('B' for x in range(yesNo))
+                
             #print(yesNo)
            # print("yes /no value:" + str(yesNo) + " binary:" + bin(yesNo & 0xff) + " \n raw response [0]: \n" + str(response[0]) + " binary: " + bin(response[0] & 0xff)+ " \n raw response[1]: \n" + str(response[1]) + " binary: " + bin(response[1] & 0xff))
             # note: REMEMBER  to add a part of code to make sure its getting data from the right card
@@ -188,7 +193,7 @@ class Leader:
                 byteRequest = response[1] 
                 print(type(byteRequest))
                 self.write(a,[0xa0 | a ]) # changed addresses[a] to just 'a' in this line it will write to the arduino the number of bytes it wants.
-                information = unpack("BBBBBB", bytes(self.read(a, int(byteRequest) ))) # changed addresses[a] to just 'a' removed: response << 8 from this line
+                information = unpack(unpackString, bytes(self.read(a, int(byteRequest) ))) # changed addresses[a] to just 'a' removed: response << 8 from this line
                 print("data received from card Type " + str(a) + " binary: " + bin(a) + ": \n" + str(information) )
               
                 time.sleep(.5)
