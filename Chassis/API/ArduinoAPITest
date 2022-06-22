@@ -13,6 +13,7 @@ int randomVal;
 bool alreadySent;
 bool send;
 int funcVal;
+int temp;
 
 void setup() {
   // Join I2C bus as follower with address 8
@@ -42,7 +43,7 @@ MAKE_TYPE_INFO( int )
 MAKE_TYPE_INFO( float )
 MAKE_TYPE_INFO( short )
 MAKE_TYPE_INFO( byte )
-MAKE_TYPE_INFO(char)
+MAKE_TYPE_INFO( char )
 
 void receiveData(int byteCount) {
 
@@ -85,6 +86,14 @@ void receiveData(int byteCount) {
 // Function that executes whenever data is received from master
 
   void sendData(byte msg){
+    yesNo = random(0,2);
+    randomBytes = random(3, 16);
+
+    //randomVal = random(0,200);
+    int data[temp];
+    
+ 
+    //Serial.println(yesNo);
   //  Wire.write(0x18);
 
    if(msg == byte(0x08)){
@@ -92,29 +101,46 @@ void receiveData(int byteCount) {
    // while( yn = 0){
   // yesNo = 0; //random(0,2);
    Wire.write(byte(0x18));
+  // Serial.println("msg = 0x08 function is working :)");
   // test = true;
    }
    if(funcVal == 0){
     Wire.write(0x18);
-    Wire.write(0x06);
+   // temp = randomBytes;
+    Wire.write(0x80);
     send = false;
     delay(100);
     
    }
-   if (funcVal == 1){
-    Serial.println(" poll ");
-    Wire.write(0x38);
-    Wire.write(0x06);
+   if (funcVal == 1 && yesNo == 0){
+   // Serial.println(" poll ");
+    Wire.write(0x18);
+    temp = randomBytes;
+    Wire.write(temp);
     alreadySent = false;
+    Serial.println("random bytes being sent: " + temp);
     delay(100);
    }
+   if (funcVal == 1 && yesNo == 1){
+   // Serial.println(" poll ");
+    Wire.write(0x18);
+    Wire.write(0x80);
+    alreadySent = false;
+    delay(10);
+   }
    if(funcVal == 2){
+    data[0] = {0x38};
+    Wire.write(data[0]);
 
-    int data [6] = {0x38, 45, 203, 6, 65, 222};
-    for(int i = 0; i< 6; i++){
+    //data [6] = {0x38, 45, 203, 6, 65, 222};
+    for(int i = 1; i<= temp; i++){
+        //randomVal = (1,100);
+        //data[0] = {0x38};
+        data[i] = {random(0,200)};
         Wire.write(data[i]);
-        delay(100);
+     
     }
+    delay(10);
    }
    /*
     if(yesNo == 0){
@@ -140,6 +166,8 @@ void receiveData(int byteCount) {
    
       }
       */
+
+      /*
       byte t = 0xa8;
    
 
@@ -160,14 +188,14 @@ void receiveData(int byteCount) {
             //}
             //Wire.write(data[k]);
           
-            for(int i = 0; i < temp; i++){
-               Wire.write(data[i]);
+           // for(int i = 0; i < temp; i++){
+           //    Wire.write(data[i]);
                //alreadySent = false;
                //delay(100);
                
-            }
+            //}
            // alreadySent = false;
-        }
+       // }
    //}
           
         }
@@ -288,6 +316,7 @@ void receiveData(int byteCount) {
 
 
 void loop() {
+  //randomVal = random(2,200);
 
 
 
