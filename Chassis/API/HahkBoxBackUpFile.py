@@ -45,8 +45,8 @@ class Leader:
     dataFrame = bytearray(32)
 
 
-    def __init__(self, address = 0x08):
-        self.address = 0x08
+    def __init__(self, address = 0x00):
+        self.address = 0x00
        # self.leader = smbus.SMBus(1) 
   
         
@@ -97,13 +97,13 @@ class Leader:
                 #print(response[0)
 
 
-                print(response[0])
+                # print(response[0])
                 temp = bytes(response[0])
-                print(type(temp))
-                print(type(bytes(0x10 | i)))
-                print(bytes(temp))
-                print(0x10 | i)
-                print(bytes([0x10 | i]))
+                # print(type(temp))
+                # print(type(bytes(0x10 | i)))
+                # print(bytes(temp))
+                # print(0x10 | i)
+                # print(bytes([0x10 | i]))
                # print(bin(lResponse&0xff))
                 if temp == bytes([0x10 | i]): #int(response[0]) ==  0x13: #followerResponse | bin(i):
                     availableAddresses.append(i)
@@ -180,8 +180,10 @@ class Leader:
             yesNo = response[1] #^ flagBit
             #while i < yesNo:
             unpackString = ''.join('B' for x in range(yesNo))
-                
-            #print(yesNo)
+            #information = []
+            result = []
+            print("card Type" + str(a))    
+            print(yesNo)
            # print("yes /no value:" + str(yesNo) + " binary:" + bin(yesNo & 0xff) + " \n raw response [0]: \n" + str(response[0]) + " binary: " + bin(response[0] & 0xff)+ " \n raw response[1]: \n" + str(response[1]) + " binary: " + bin(response[1] & 0xff))
             # note: REMEMBER  to add a part of code to make sure its getting data from the right card
             #counter = counter + 1;
@@ -194,7 +196,7 @@ class Leader:
                 print(type(byteRequest))
                 self.write(a,[0xa0 | a ]) # changed addresses[a] to just 'a' in this line it will write to the arduino the number of bytes it wants.
                 information = unpack(unpackString, bytes(self.read(a, int(byteRequest) ))) # changed addresses[a] to just 'a' removed: response << 8 from this line
-                print("data received from card Type " + str(a) + " binary: " + bin(a) + ": \n" + str(information) )
+                print("data received from card Type " + str(a) + ": \n" + str(information) )
               
                 time.sleep(.5)
                 # ack knowledges that information hAS BEEN recieved
@@ -205,23 +207,28 @@ class Leader:
                 #use the number of bytes to determine what read function to use.
                 # add info for after the byte request
                 print("\n")
+                result.append(information)
                # print("\n")
-                return information #/// commented out temp to see if its the problem for no loops note: not responsible for breaking the loop
+           # return information #/// commented out temp to see if its the problem for no loops note: not responsible for breaking the loop
         #counter = counter + 1
                 
             if((yesNo & 0x80) == 128): #friendly reminder that 255 means empty slot. trying with both 255 and 0 see whihc works correctly
-                print('no information!')
+                print('no information frome card type: ' + str(a))
                 print("response value \n" + str(response[1]))
                 print("\n")
+                #information = "card " + str(a) + " no info" 
+               # information = 0x00 | a
+                result.append(response[1])
                # print("\n")
-                return
+        
             #counter = counter + 1   
             # time.sleep(.1)
             # print('no reponse after byte request')
             #remove from list
             #continue
-        else:
-            print("empty")
+            else:
+                print("empty")
+        return result
             
             
         #     print()
