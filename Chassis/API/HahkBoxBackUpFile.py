@@ -1,296 +1,403 @@
-import os
-import subprocess
-import re
-import time
-#import RPi.GPIO as GPIO
-from struct import*
-from smbus import SMBus
-leader = 0x00
-bus = SMBus(1)
-followerResponse = 0x10 #0b0001 << 4
-lRequest = 0x00 #0b0000 << 4
-lResponse = 0x10#0b0001 << 4
-cRequest = 0x70 #0b0111 << 4
-cResponse = 0x80 #0b1000 << 4
-interrupt = 0x50 #0b0101 << 4
-boot = 8 #0x08 #0x60 #0b0110 << 4
-error = 0x20 #0b0010 << 4
-data = 0x30 #0b0011 << 4
-ack = 0x40 #0b0100 << 4
-shutdown = 0xe0 #0b1110 <<4 # change these bits later to fit the data sheet mroe acurately
-#byteRequest = 0x80 #0b1000 << 4
-dataRequest = 0xa0  #0b1010 << 4
+import dash
+from dash.dependencies import Output, Input
+from dash import Dash, Input, Output
+#import dash_core_components as dcc
+from dash import dcc
+import dash_html_components as html
 
-valueMask = 0b01111111
-flagBit = 0b10000000
-
-#availableAddresses = []
-
-'''
-    note:
-    add Follwer function that contains the name of the device so it can automatiicaly
-    be read by the rasperrby pi and put its name in a drop box container
-    or if the binary value of the card never changes you can have a script in the GUI program itself that will match the
-    binary ID with its actual name and display that instead of its binary address id
-'''
-
-
-class Leader:
-   # i2c = busio.I2C(board.SCL, board.SDA)
-
-   #so far the 4 ac uses the most amount a bytes it uses 6 but the byte array may meed to be set at at higher
-   #amount inorder to be used by Follwers that are going to be sending a larger amount of bytes (may set it 16 bytes sinces 32 bits shouldn't be needed)
-
-   #use dataframe to help redeuce data frame sizes - use without it at first.
-    dataFrame = bytearray(32)
-
-
-    def __init__(self, address = 0x00):
-        self.address = 0x00
-       # self.leader = smbus.SMBus(1) 
-  
-        
-        #used as default settings for the Leader. 
-        #does the leader have anthing it needs to be defined as itself (maybe not, the leader is really only displaying values and request specific data 
-        # from certain cards.)
-        
-        
-
-
-    def read(self, address, byteRequest):
- 
-        dataFrame = bus.read_i2c_block_data(address, 0, byteRequest)
-
-
-        return dataFrame
+#import plotly.express as px
+#import plotly.io as pio
+import plotly
+import dash_daq as daq
+#import numpy as np
+#import array as arr
+import random
+import plotly.graph_objs as go
+import pandas as pd
+import numpy
+from datetime import datetime
+from plotly.subplots import make_subplots
+##from random import seed
+from random import randint
+from collections import deque
 
 
 
-    def write(self, address, msg):
+randomRange = 0
+max = 30
+X = deque(maxlen=20)
+X.append(1)
+timee = deque(maxlen = max)
+Y = deque(maxlen=max)
+Y2 = deque(maxlen=max)
+Y3 = deque(maxlen=max)
+Y4 = deque(maxlen=max)
+ch1 = numpy.array([["Time ", "Temperature"]])
 
 
 
-        bus.write_block_data(address, 0, msg)
-
-    
-    # note to self to replace time.sleep functions with a timeout counter
+#df = pd.DataFrame({"Card data 1": Y,  "Time": timee })
 
 
-    def boot(self):
-        #this will intialize all addresses the Leader in the firmware should have a prelist of some addresses (maybe the location of each card)
-        availableAddresses = []
-        # 10 addr
-        i = 0
-        
-        # Note:
-            # a constant int o '3' is being used to test the function
-            # this int will need to be eventually changed so that 
-            # it can loop through a max of 10 cards.
-        
-        
-        #remember to uncomment continue in loop as well.. and to also intdent code
-        while i <= 10:
-            try:
-                self.write(i, [i]) #12 was in place but changed it to the I value 
-                response = [self.read(i, 1)]
-           # response = bus.read_i2c_block_data(0x04, 0, 2)
-                #print(response[0)
+app = dash.Dash(__name__)
 
 
-                # print(response[0])
-                temp = bytes(response[0])
-                # print(type(temp))
-                # print(type(bytes(0x10 | i)))
-                # print(bytes(temp))
-                # print(0x10 | i)
-                # print(bytes([0x10 | i]))
-               # print(bin(lResponse&0xff))
-                if temp == bytes([0x10 | i]): #int(response[0]) ==  0x13: #followerResponse | bin(i):
-                    availableAddresses.append(i)
-                    self.write(i, [ack | i])  # boot is sending Ack response to tell its been processes
-                    print("Card slot "+str(i)+ " responded")
-                    i = i + 1
-                    continue
-                else:
-                    print("Invalid Response: \n Value Received: " + str(response[0]) +"\n Value Expected: " + bin(i| lResponse))
-                    i = 1+i
-                    continue
-            except OSError:        
-                time.sleep(.05)
-                print('Card slot '+ str(i) + ' did not respond.  ')
-                i = i + 1
-
-        return availableAddresses
 
 
-        #return an array of addresses
-        #the poll function will be programmed in the actual firmware.
-        
-        
-        
-        
-        
-        
-    '''
-    05 - 16 - 2022
-    
-    
-    errors to fix:
-    bit mask for yesNo: value of bit mask does not change regardless of bitmask
-    its recvieing a value of 20 which is 0010 0000: try and review arduino code and make sure it is sending a recieving values correctly
-    
-    '''
- 
-    def poll(self, addresses): #commented out variables 'me' 'address'
-        #it wait 100ms for a response from follower
-        #else it will time out and report an error
-        # remove from addresses[]
-      #  addresses = []
-      #  addresses.append()
-       # print(addresses) # print to mark when the poll function is active in data output i2c detect terminal command can be used with python to use for i2c
-        #
-        #if addresses:
-        #while(True): #when in a while loop it does not repeat is it becasue of the return function?
-        counter = 0
-        counter = counter + 1
-        for a in addresses:
-           ## print("loop number: " + str(counter))
-           
-           # 6-17-18 using a special poll header of 0x5
-            #print(0x50 | a)
-            self.write(a, [ 0x50 | a] ) #(lRequest | address))
-            time.sleep(.25)
-            #print(bin(0xff & a))
-            # will wait for a response from the card
-            #if not response it should skip this card
-            #if card does not respond a second time then to remove it from the system
+# --------------------------------- Tab stylization------------------------------------------------#
+
+tabs_styles = {
+    'height': '44px'
+}
+tab_style = {
+    'borderBottom': '1px solid #d6d6d6',
+    'padding': '16px',
+    'fontWeight': 'bold'
+}
+
+tab_selected_style = {
+    'borderTop': '1px solid #d6d6d6',
+    'borderBottom': '1px solid #d6d6d6',
+    'backgroundColor': '#119DFF',
+    'color': 'white',
+    'padding': '16px'
+}
+
+
+#-------------------------- app Layout--------------------------------------------------------------------#
+
+app.layout = html.Div([
+
+    html.Div(id='tabs-content'),
+    dcc.Store(id='session', storage_type='session'),
+
+    dcc.Tabs(
+
+        id = "tabs-with-classes",
+        value = 'tab2',
+
+        children = [
+
+            dcc.Tab (
+                
+                label = 'Tab 1',
+                value = 't1',
+               # tab_id = 't1',
+                style = tab_style, 
+                selected_style = tab_selected_style,
+                className = 'custom-tab',
+                selected_className = 'custom-tab-selected',
+                children = [
+
+                    #current/y working on adding input range feature to change the amount of data can be viewed
+
+                    dcc.Input(id="range", type="number", placeholder="", style={'marginRight':'10px'}),
+                    html.Div(id="output"),
+
+                    daq.Indicator(
+                        id='my-daq-indicator',
+                        value=True,
+
+                        color="#00Bc96"
+                        ), 
+                        #randomRange : 50
+
+                ]
+
+
+            ),
+            dcc.Tab (
+
+                label = '4 wire ac',
+               # tab_id= 't2',
+                value = 't2',
+                className = 'custom-tab',
+                style=tab_style, 
+                selected_style=tab_selected_style,
+                selected_className = 'custom-tab-selected',
+                children = [
+                html.Div(id='live-update-text'),
+
+                
+
+                    dcc.Dropdown(
+                        options=[
+                            {'label': '2 wire', 'value': 'NYC'},
+                            {'label': 'PID', 'value': 'MTL'},
+                            {'label': '4 wire DC', 'value': 'SF'},
+                            {'label': '4 wire AC', 'value': 'me'}
+
+                        ],
+                        value='me'
+                    ),  
+
+                    #'randomRange' : 5,
+
+
+                    dcc.Checklist(
+                        id = 'box',
+                        options=[
+                            {'label': 'Resistance', 'value': 'R'},
+                            {'label': 'Voltage', 'value': 'V'},
+
+                        ],
+                        
+                        value= ['R']
+                        
+                    ),
+                    html.Button("Download CSV", id="btn_csv"),
+                    dcc.Download(id="download-dataframe-csv"),
+
+                
+
+
+                ]),
+
+
+
+
+                #]
+
             
-            #self.wait(50)
+        ]
+    ),
+    html.Button('test for Hiding tabs', id="hide_1_button"),
+    html.Div(id='tabs-content-classes'),
+
+    html.Div([        
+
+#---------------------- One Graph ----------------------------------------------------------#
+         
+
+# -----------------------------------------------------------------
+
+#---------------------- two Graph ------------------------------
+        dcc.Graph( 
+            id='live-graph2',
+            #animate = True
+            
+        ),
+
+        dcc.Interval(
+            id='graph-update2',
+            interval= 1*1000,
+            n_intervals = 0
+        ),
 
 
-            response = self.read(a, 2) #commented out addresses  where a currently is
-           # print("first response back: " + str(response[1]))
-            time.sleep(.25)
-            # response byte 1 will contain header and card number, byte 2 contains value yes or no and how many bytes
-             #   i = i +1;
-            #
-            #print(type(response))
-          #  for i in response:
-           #     print("response " + str(i) + "binary: " + bin(i))
-            yesNo = response[1] #^ flagBit
-            #while i < yesNo:
-            unpackString = ''.join('B' for x in range(yesNo))
-            #information = []
-            result = []
-            print("card Type" + str(a))    
-            print(yesNo)
-           # print("yes /no value:" + str(yesNo) + " binary:" + bin(yesNo & 0xff) + " \n raw response [0]: \n" + str(response[0]) + " binary: " + bin(response[0] & 0xff)+ " \n raw response[1]: \n" + str(response[1]) + " binary: " + bin(response[1] & 0xff))
-            # note: REMEMBER  to add a part of code to make sure its getting data from the right card
-            #counter = counter + 1;
-            #print("\n")
-            if(yesNo < 128):
-                print("information is being recieved..")
-              #  print(response[0])
-              #  print(response[1])
-                byteRequest = response[1] 
-                print(type(byteRequest))
-                self.write(a,[0xa0 | a ]) # changed addresses[a] to just 'a' in this line it will write to the arduino the number of bytes it wants.
-                information = unpack(unpackString, bytes(self.read(a, int(byteRequest) ))) # changed addresses[a] to just 'a' removed: response << 8 from this line
-                print("data received from card Type " + str(a) + ": \n" + str(information) )
+# -----------------------------------------------------------------
+
+])
+
+])
+
+@app.callback(
+[Output('tabs-content', 'children')],
+Input('tabs-with-classes', 'value'),
+
+
+prevent_initial_call=True
+# ^^^^^^ look up what the above function does ^^^^^^^
+)
+def render_content(tab):
+    if (tab == 't1'):
+        randomRange = 5
+    if (tab == 't2'):
+        randomRange = 68
+
+
+
+@app.callback(dash.dependencies.Output('live-update-text', 'children'),
+              dash.dependencies.Input('graph-update', 'n_intervals'))
               
-                time.sleep(.5)
-                # ack knowledges that information hAS BEEN recieved
-                self.write(a ,[a | ack])
-                
-                print(a | ack)
-                #need multiple read functions, 
-                #use the number of bytes to determine what read function to use.
-                # add info for after the byte request
-                print("\n")
-                result.append(information)
-               # print("\n")
-           # return information #/// commented out temp to see if its the problem for no loops note: not responsible for breaking the loop
-        #counter = counter + 1
-                
-            if((yesNo & 0x80) == 128): #friendly reminder that 255 means empty slot. trying with both 255 and 0 see whihc works correctly
-                print('no information frome card type: ' + str(a))
-                print("response value \n" + str(response[1]))
-                print("\n")
-                #information = "card " + str(a) + " no info" 
-               # information = 0x00 | a
-                result.append(response[1])
-               # print("\n")
+def update_metrics(n):
+    t = timee.pop()
+    timee.append(t)
+    ti = t
+
+    v = Y.pop()
+    Y.append(v)
+    val = v
+    style = {'padding': '5px', 'fontSize': '26px'}
+    return [
+        html.Span('Value: {}'.format(v), style=style),
+        html.Span('Value: {}'.format(t), style=style),
+
+    ]
+
+# -------------------------------- Graph Update TWO--------------------------
+
+
+
+
+@app.callback(
+    Output('live-graph2', 'figure'),
+    Input('graph-update2', 'n_intervals'),
+
+
+    #Input('box', 'value')
+    )
+
+#value' goes in the update function
+def update_graph_scatter2(n):
+    randomRange = 1
+#--------------------------------------------------------------------------------------------------------------------
+#   this portion of code will probably be the only place needed to add the information from the API
+
+
+    style = {'padding': '10px'}
+
+    X.append(X[-1]+1)
+   # y = randint(0,4)
+    
+    #random y values to test that the graphs can update live.
+    Y.append(random.uniform(0,randomRange))
+    Y2.append(random.uniform(0,randomRange))
+    Y3.append(random.uniform(0,randomRange))
+    Y4.append(random.uniform(0,randomRange))
+    ch1 = numpy.array([["Time ", "Temperature"], [timee ,'\n', Y, '\n']])
+
+ 
+   
+   
+# this is currently not in use but may be useful for organizaing data with API
+
+    # data = {
+
+    #     'time' : [],
+    #     'full': [],
+    #     'vis': [],
+    #     'lux': [],
+    #     'inf': []
+
+    # }
+    
+
+    now = datetime.now()
+    timee.append(now)
+    
+    
+    #-------------------------------------------------------------------------------------------
+
+    
+    fig = make_subplots(rows=2, cols=2, vertical_spacing=0.1,
+
+    subplot_titles=("Channel 1","Channel 2", "Channel 3", "Channel 4")
+    
+    
+    )
+    
+    fig['layout']['margin'] = {
+        'l': 50, 'r': 20, 'b': 40, 't': 30
+    }
+    fig['layout']['legend'] = {'x': 1.5, 'y': 1, 'xanchor': 'left'}
+    #timee.append(timee[datetime.now()]-datetime.now()
+    
+
+
+    t = plotly.graph_objs.Scatter(
+
+        x = list(timee),
+        y  = list(Y),
+
+
+
+    )
+    t2 = plotly.graph_objs.Scatter(
+
+        x = list(timee),
+        y  = list(Y2),
+
+
+
+    )
+
+    t3 = plotly.graph_objs.Scatter(
+
+        x = list(timee),
+        y  = list(Y3),
+
+
+
+    )
+
+    t4 = plotly.graph_objs.Scatter(
+
+        x = list(timee),
+        y  = list(Y4),
+
+
+
+    ),
+
+#--- this portion of the code creates the colored line for each graph based on the values it recives from the 
+#--- previous value, this traces a line between each scatter points for each graph
+
+    fig.add_trace(
+        go.Scatter(
+        t,
+   
+
+
+        ), 1, 1
+    )
+    fig.add_trace(
+    go.Scatter(
+        t2,
+    
+
+    ), 1, 2
+
+    )
+
+    fig.add_trace(
+    go.Scatter(
+        t3,
         
-            #counter = counter + 1   
-            # time.sleep(.1)
-            # print('no reponse after byte request')
-            #remove from list
-            #continue
-            else:
-                print("empty")
-        return result
-            
-            
-        #     print()
 
+    ), 2, 1
+    )
+    fig.add_trace(
 
-        time.sleep(1)
-        #remove from list
-        print('did not respond')
+    go.Scatter(
+        t,
         
 
+    ), 2, 2
+    )
+
+    #fig.update_xaxes( autorange = True)
+    fig.update_layout(template = 'plotly_dark' ) # xaxis=dict(range=[min(X),max(X)]))
+    
+    
+    #fig.update_xaxes(range=list(timee))
+
+    
+    global df 
+    df = pd.DataFrame({"Card data 1": Y,  "Time": timee })
+
+
+    return fig
+
+
+
+@app.callback(
+    Output("download-dataframe-csv", "data"),
+    Input("btn_csv", "n_clicks"),
+    prevent_initial_call=True,
+)
+def func(n_clicks):
+
+    file = numpy.savetxt("4AC-ch1.txt", ch1, delimiter=',', fmt ="%s")
+
+    print(file)
+    return dcc.send_file(file, '4AC-ch1.txt')
+   # return dcc.send_data_frame(df.to_csv, "mydf.csv")
 
 
 
 
-    def shutdown(self):
-        addresses = []
-        addresses.append(boot())
-
-        #for loop for each item in addresses i
-
-        self.write(addresses[i], addresses[i] | shutdown)
-        response = self.read(addresses[i])
-        # have card response with a shutdown ack
-        # wait for card to shutdown
-        #shutdown timmer for each card.
-        #if faisl to shutdown send a timeout error saying it failed to showdown
-        # eait for each card to shutdown one by one.
-        for i in addresses:
-            if(response & addresses[i] == shutdown ): #have it be a shutdown ack
-                # for card to completely shutdown and return with finally shutdown bits
-                reply = self.read(addresses[i])
-                if (reply & addresses[i] == shutdown):
-                    # remove address from list 
 
 
-                    return
-                time.sleep(3)
-                print('shutdown timeout error')
-                #write the card data so thats its headder is now an error header.
-
-            else:
-                print('did not respond with correct shutdown ack')
-
-            i = i+1
-
-        #shutdown self
-         #check that all cards are empty
-         # look how write codde to shutdown itself.
-
-
-
-        ...
-
-
-    def error(self, address):
-        ...
-
-
-# '''
-
-# interupts would have to be card specific, figure what how they should be triggered, 
-# these should done in the coding of the cards themselves but the api should have somewhat to trigger an interupt
-# and this interupt can specifically be coded into the card itself.
-
-# '''
+if __name__ == '__main__':
+    app.run_server(debug= True   )#, dev_tools_hot_reload = False) 
