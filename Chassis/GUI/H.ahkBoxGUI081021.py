@@ -22,14 +22,16 @@ from random import randint
 from collections import deque
 
 
-max = 20
-X = deque(maxlen=20)
-X.append(1)
+
+#randomRange = 0
+max = 30
 timee = deque(maxlen = max)
 Y = deque(maxlen=max)
 Y2 = deque(maxlen=max)
 Y3 = deque(maxlen=max)
 Y4 = deque(maxlen=max)
+#ch = numpy.array([]) 
+
 
 
 #df = pd.DataFrame({"Card data 1": Y,  "Time": timee })
@@ -63,46 +65,85 @@ tab_selected_style = {
 #-------------------------- app Layout--------------------------------------------------------------------#
 
 app.layout = html.Div([
-    
+
+    html.Div(id='tabs-content'),
     dcc.Store(id='session', storage_type='session'),
+
+    # this creates a list of options
 
     dcc.Tabs(
 
         id = "tabs-with-classes",
-        value = 'tab2',
+        value = 'tb',
 
         children = [
-
-            dcc.Tab (
+                dcc.Tab (
                 
-                label = 'Tab 1',
-                value = 'home',
-                id = 't2',
-                style=tab_style, 
-                selected_style=tab_selected_style,
+                label = 'Summary',
+                value = 't',
+               # tab_id = 't1',
+                style = tab_style, 
+                selected_style = tab_selected_style,
                 className = 'custom-tab',
                 selected_className = 'custom-tab-selected',
                 children = [
+
+                    #current/y working on adding input range feature to change the amount of data can be viewed
+
+                    dcc.Input(id="realRange", type="number", placeholder=max, style={'marginRight':'10px'}),
+                    html.Div(id="out"),
+
+                    dcc.RadioItems(   options=[
+                    {'label': 'Graph A', 'value': 'A'},
+                    {'label': 'Graph B', 'value': 'B'},
+                    {'label': 'Graph C', 'value': 'C'},
+                    {'label': 'Graph D', 'value': 'D'},
+                    ],
+                    value = 'A' ),
+
+
+                ]
+
+
+            ),
+
+
+# the tab bellow will hold the information for the graphs
+            dcc.Tab (
+                
+                label = 'Graphs',
+                value = 't1',
+               # tab_id = 't1',
+                style = tab_style, 
+                selected_style = tab_selected_style,
+                className = 'custom-tab',
+                selected_className = 'custom-tab-selected',
+                children = [
+
+                    #current/y working on adding input range feature to change the amount of data can be viewed
 
                     daq.Indicator(
                         id='my-daq-indicator',
                         value=True,
 
                         color="#00Bc96"
-                        ) 
+                        ), 
+                        #randomRange : 50
+
                 ]
 
 
             ),
+
             dcc.Tab (
 
                 label = '4 wire ac',
-                id= 't',
-                value = 'Full',
+               # tab_id= 't2',
+                value = 't2',
                 className = 'custom-tab',
                 style=tab_style, 
                 selected_style=tab_selected_style,
-                selected_className = 'custome-tab-selected',
+                selected_className = 'custom-tab-selected',
                 children = [
                 html.Div(id='live-update-text'),
 
@@ -119,6 +160,8 @@ app.layout = html.Div([
                         value='me'
                     ),  
 
+                    #'randomRange' : 5,
+
 
                     dcc.Checklist(
                         id = 'box',
@@ -133,6 +176,8 @@ app.layout = html.Div([
                     ),
                     html.Button("Download CSV", id="btn_csv"),
                     dcc.Download(id="download-dataframe-csv"),
+
+                
 
 
                 ]),
@@ -164,7 +209,7 @@ app.layout = html.Div([
 
         dcc.Interval(
             id='graph-update2',
-            interval= 1*1000,
+            interval= 1*10000,
             n_intervals = 0
         ),
 
@@ -176,15 +221,28 @@ app.layout = html.Div([
 ])
 
 @app.callback(
-[Output('t2', 'style'),Output('t2', 'selected_style')],
-Input('hide_1_button', 'n_clicks'),
-prevent_initial_call=True,
+[Output('tabs-content', 'children')],
+Input('tabs-with-classes', 'value'),
+
+
+prevent_initial_call=True
+# ^^^^^^ look up what the above function does ^^^^^^^
 )
-def hide_tab1(_):
-    return {"display": "none"}, {"display": "none"}
+def render_content(tab):
+    global randomRange
+    if (tab == 't1'):
+        randomRange = 5
+    if (tab == 't2'):
+        randomRange = 68
 
-
-
+@app.callback(
+    [Output('realRange', 'children')],
+    Input('out', 'value'),
+)
+def update_output(value):
+    max = value
+    return max
+  
 
 @app.callback(dash.dependencies.Output('live-update-text', 'children'),
               dash.dependencies.Input('graph-update', 'n_intervals'))
@@ -219,7 +277,7 @@ def update_metrics(n):
 
 #value' goes in the update function
 def update_graph_scatter2(n):
-
+    randomRange = 1
 #--------------------------------------------------------------------------------------------------------------------
 #   this portion of code will probably be the only place needed to add the information from the API
 
@@ -230,11 +288,12 @@ def update_graph_scatter2(n):
    # y = randint(0,4)
     
     #random y values to test that the graphs can update live.
-    Y.append(random.uniform(0,4))
-    Y2.append(random.uniform(0,50))
-    Y3.append(random.uniform(0,10))
-    Y4.append(random.uniform(0,24))
+    Y.append(random.uniform(0,randomRange))
+    Y2.append(random.uniform(0,randomRange))
+    Y3.append(random.uniform(0,randomRange))
+    Y4.append(random.uniform(0,randomRange))
 
+ 
    
    
 # this is currently not in use but may be useful for organizaing data with API
@@ -247,9 +306,9 @@ def update_graph_scatter2(n):
     #     'lux': [],
     #     'inf': []
 
-    # }
+    #  if you want to use the dictionarry- use Capital 'M'
     
-
+    #
     now = datetime.now()
     timee.append(now)
     
@@ -306,10 +365,10 @@ def update_graph_scatter2(n):
 
 
     ),
-#
-#
+
 #--- this portion of the code creates the colored line for each graph based on the values it recives from the 
 #--- previous value, this traces a line between each scatter points for each graph
+
     fig.add_trace(
         go.Scatter(
         t,
@@ -323,9 +382,10 @@ def update_graph_scatter2(n):
         t2,
     
 
-
     ), 1, 2
+
     )
+
     fig.add_trace(
     go.Scatter(
         t3,
@@ -347,10 +407,13 @@ def update_graph_scatter2(n):
     
     
     #fig.update_xaxes(range=list(timee))
+  #  global ch
 
-    
-    global df 
-    df = pd.DataFrame({"Card data 1": Y,  "Time": timee })
+   # ch = numpy.array([numpy.array(["Time ", "Temperature"])], [numpy.array([str(timee), str(Y)])])
+
+
+#    #################################### global df 
+#     df = pd.DataFrame({"Card data 1": Y,  "Time": timee })
 
 
     return fig
@@ -363,8 +426,17 @@ def update_graph_scatter2(n):
     prevent_initial_call=True,
 )
 def func(n_clicks):
-    return dcc.send_data_frame(df.to_csv, "mydf.csv")
 
+    #file = numpy.savetxt("4AC-ch1.txt", ch, fmt='%s')
+    #a = open("4AC-ch1.txt", 'r')
+   # print(a.read())
+    #return dcc.send_file(file, '4AC-ch1.txt')
+   
+    return #dict(content =file, filename="data.txt")
+   # return dcc.send_data_frame(df.to_csv, "mydf.csv")
+
+
+################ error
 
 
 
@@ -372,4 +444,4 @@ def func(n_clicks):
 
 
 if __name__ == '__main__':
-    app.run_server(debug= True   )#, dev_tools_hot_reload = False) 
+    app.run_server(debug= True , dev_tools_hot_reload = False) 
