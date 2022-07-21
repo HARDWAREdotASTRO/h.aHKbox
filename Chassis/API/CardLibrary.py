@@ -19,11 +19,14 @@
 # function:
 # cards will be their own function and perform certain actions based on the logistical header
 # bits holds the byte array
+from weakref import finalize
+
+
 def wireAC(bits):
-    ch1 = 0
-    ch2 = 0
-    ch3 = 0
-    ch4 = 0
+    ch1 = bytearray([])
+    ch2 = bytearray([])
+    ch3 = bytearray([])
+    ch4 = bytearray([])
     queByteData = bytearray([])
 
 
@@ -52,6 +55,10 @@ def wireAC(bits):
     
     # data
     if((bits[0] & 0xf0) == 0b00011 << 4):
+        prevChannel = False
+        val = 2
+
+
         #0b1000 -- ch1
         #0b0100 -- ch2
         #0b0010 -- ch3
@@ -61,6 +68,11 @@ def wireAC(bits):
             print("ch1 is on")
             if((bits[1] & 0x08) == 0b1000 ):
                 print("voltage")
+                
+                for i in range(5):
+                    print(str(int(bits[i+val])))
+
+                prevChannel = True
             else:
                 print("Resistance")
 
@@ -69,9 +81,14 @@ def wireAC(bits):
             print("ch2 is on")
             if((bits[1] & 0x04) == 0b0100 ):
                 print("voltage")
+                if(prevChannel):
+                    val += 5
+                for i in range(5):
+                    print(str(int(bits[i+val])))
+                prevChannel = True
             else:
                 print("Resistance")
-            print("range: " + bits[2])
+            print("range: " + str(bits[2]))
             
 
 
@@ -80,6 +97,11 @@ def wireAC(bits):
             print("ch3 is on")
             if((bits[1] & 0x02) == 0b0010 ):
                 print("voltage")
+                if(prevChannel):
+                    val += 5
+                for i in range(5):
+                    print(str(int(bits[i+val])))
+                prevChannel = True
             else:
                 print("Resistance")
             
@@ -88,6 +110,11 @@ def wireAC(bits):
             print("ch4 is on")
             if((bits[1] & 0x01) == 0b0001 ):
                 print("voltage")
+                if(prevChannel):
+                    val += 5
+                for i in range(5):
+                    print(str(int(bits[i+val])))
+                prevChannel = True
             else:
                 print("Resistance")
 
@@ -110,5 +137,5 @@ def wireAC(bits):
 
         ...
 
-test = bytearray([0x33, 0xff, 0x02, 0x78, 0xdf, 0x3a, 0x55])
+test = bytearray([0x33, 0x8f,    0x01, 0x02, 0x03, 0x04, 0x05,    0x06, 0x07, 0x08, 0x09, 0x0a,     0x0b, 0x0c, 0x0d, 0x0e, 0x0f,      0x10, 0x11, 0x12, 0x13, 0x14])
 wireAC(test)
