@@ -20,8 +20,9 @@
 # cards will be their own function and perform certain actions based on the logistical header
 # bits holds the byte array
 from weakref import finalize
+import struct
 
-
+# for future optimization
 def wireAC(bits):
     ch1 = bytearray([])
     ch2 = bytearray([])
@@ -71,6 +72,8 @@ def wireAC(bits):
                 
                 for i in range(5):
                     print(str(int(bits[i+val])))
+                #print("voltage: " + str(struct.unpack('<f', bits[val:val + 4])))
+                print("voltage: " + str(struct.unpack('>f', bits[val +1:val + 5])))
 
                 prevChannel = True
             else:
@@ -88,7 +91,7 @@ def wireAC(bits):
                 prevChannel = True
             else:
                 print("Resistance")
-            print("range: " + str(bits[2]))
+            print("range: " + str(bits[val-4]))
             
 
 
@@ -110,6 +113,11 @@ def wireAC(bits):
             print("ch4 is on")
             if((bits[1] & 0x01) == 0b0001 ):
                 print("voltage")
+                #note: you do need this boolean value.
+                #this boolean acts as a check to make sure the first 5 bytes are reached
+                # if previous channel as alread toggled this than it should be act as normal
+                # but say only channel 4 is on and if this boolean was not here it would immediately try to go to the next 5 bytes
+                #rather than get the next bytes right after the inital 2 bytes in the given array
                 if(prevChannel):
                     val += 5
                 for i in range(5):
@@ -137,5 +145,5 @@ def wireAC(bits):
 
         ...
 
-test = bytearray([0x33, 0x8f,    0x01, 0x02, 0x03, 0x04, 0x05,    0x06, 0x07, 0x08, 0x09, 0x0a,     0x0b, 0x0c, 0x0d, 0x0e, 0x0f,      0x10, 0x11, 0x12, 0x13, 0x14])
+test = bytearray([0x33, 0x8f,    0x01, 0x02, 0xa3, 0x04, 0x05,    0x06, 0x07, 0x08, 0x09, 0x0a,     0x0b, 0x0c, 0x0d, 0x0e, 0x0f,      0x10, 0x11, 0x12, 0x13, 0x14])
 wireAC(test)
