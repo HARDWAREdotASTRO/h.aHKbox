@@ -1,22 +1,28 @@
+import os
+import subprocess
+import re
 import time
+#import RPi.GPIO as GPIO
+from struct import*
+from smbus import SMBus
+leader = 0x00
+bus = SMBus(1)
+followerResponse = 0x10 #0b0001 << 4
+lRequest = 0x00 #0b0000 << 4
+lResponse = 0x10#0b0001 << 4
+cRequest = 0x70 #0b0111 << 4
+cResponse = 0x80 #0b1000 << 4
+interrupt = 0x50 #0b0101 << 4
+boot = 8 #0x08 #0x60 #0b0110 << 4
+error = 0x20 #0b0010 << 4
+data = 0x30 #0b0011 << 4
+ack = 0x40 #0b0100 << 4
+shutdown = 0xe0 #0b1110 <<4 # change these bits later to fit the data sheet mroe acurately
+#byteRequest = 0x80 #0b1000 << 4
+dataRequest = 0xa0  #0b1010 << 4
 
-import smbus2
-import board
-import busio
-from smbus2 import SMbus
-leader = 0b0000
-followerResponse = 0b0001 << 4
-lRequest = 0b0000 << 4
-lResponse = 0b0001 << 4
-cRequest = 0b0111 << 4
-cResponse = 0b1000 << 4
-interrupt = 0b0101 << 4
-boot = 0b0110 << 4
-error = 0b0010 << 4
-data = 0b0011 << 4
-ack = 0b0100 << 4
-shutdown = 0b1110 <<4 # change these bits later to fit the data sheet mroe acurately
-byteRequest = 0b1000 << 4
+valueMask = 0b01111111
+flagBit = 0b10000000
 
 #availableAddresses = []
 
@@ -26,24 +32,23 @@ byteRequest = 0b1000 << 4
     be read by the rasperrby pi and put its name in a drop box container
     or if the binary value of the card never changes you can have a script in the GUI program itself that will match the
     binary ID with its actual name and display that instead of its binary address id
-
-
-
 '''
 
 
 class Leader:
    # i2c = busio.I2C(board.SCL, board.SDA)
-    Leader = smbus2(1)
+
    #so far the 4 ac uses the most amount a bytes it uses 6 but the byte array may meed to be set at at higher
    #amount inorder to be used by Follwers that are going to be sending a larger amount of bytes (may set it 16 bytes sinces 32 bits shouldn't be needed)
 
    #use dataframe to help redeuce data frame sizes - use without it at first.
-    dataFrame = bytearray(8)
+    dataFrame = bytearray(32)
 
 
-    def __init__(self, address):
-        self.address = 0b0
+    def __init__(self, address = 0x00):
+        self.address = 0x00
+       # self.leader = smbus.SMBus(1) 
+  
         
         #used as default settings for the Leader. 
         #does the leader have anthing it needs to be defined as itself (maybe not, the leader is really only displaying values and request specific data 
@@ -51,137 +56,192 @@ class Leader:
         
         
 
-        ...
 
-    def read(self, address, byteRequest ):
-        
-        with self.leader as smbus2(1):
-
-            #read the first two bytes of information to see if there is data
-            # first byte will contain header and card number
-            # second byte will contain information about header
-
-                # info = self.read_byte(address)
-                # #if data head is for data 
-                # if(info & 0xff & data == data & info << 8 == 0b0):
-                #     # go next card there is no information
-                #     return info
-
-            # initalRead = self.read_word(address)
-            # numByte = initalRead << 8
-            # if numByte & 0x80 != 0x80:
-
-                #do an initial read
-                # if specified amount fo bytes are recived then use 
-                # do nothing
-            
-
-                
-
-           read = self.read_block_data(address,0, byteRequest)
-           self.dataFrame[0] = read
+    def read(self, address, byteRequest):
+ 
+        dataFrame = bus.read_i2c_block_data(address, 0, byteRequest)
 
 
-        return read
-
-
-            # will do an inital read of the first (2) bytes and if there is information 
-            # it will then request to read that block ammount of data
+        return dataFrame
 
 
 
     def write(self, address, msg):
 
-        with self.leader as smbus(1):
-                #temp value figure out how to implement on how to write a header to cards
-            header = 0b0
-
-                #does not return
-                # logstical header and source card infor
-            self.dataFrame[0] = ... # logstical header | 0bo (master address0)
-
-                #note may need for loop of some kind to properly intergrate through each buffer of data frames. 
-            self.dataFrame[1]
 
 
+        bus.write_block_data(address, 0, msg)
 
-
-            self.write_block_data(address, 0, msg)
-
-
-
-
-        ...
     
     # note to self to replace time.sleep functions with a timeout counter
 
 
-    def boot(self, addressed):
+    def boot(self):
         #this will intialize all addresses the Leader in the firmware should have a prelist of some addresses (maybe the location of each card)
         availableAddresses = []
         # 10 addr
         i = 0
+        
+        # Note:
+            # a constant int o '3' is being used to test the function
+            # this int will need to be eventually changed so that 
+            # it can loop through a max of 10 cards.
+        
+        
+        #remember to uncomment continue in loop as well.. and to also intdent code
         while i <= 10:
-            self.write(boot,  bin(i))
-            response = self.read(bin(i))
-            if response == followerResponse | bin(i):
-                availableAddresses.append(bin(i) & 0xff)
-                self.write(bin(i), ack)
+            try:
+                self.write(i, [i]) #12 was in place but changed it to the I value 
+                response = [self.read(i, 1)]
+           # response = bus.read_i2c_block_data(0x04, 0, 2)
+                #print(response[0)
+
+
+                # print(response[0])
+                temp = bytes(response[0])
+                # print(type(temp))
+                # print(type(bytes(0x10 | i)))
+                # print(bytes(temp))
+                # print(0x10 | i)
+                # print(bytes([0x10 | i]))
+               # print(bin(lResponse&0xff))
+                if temp == bytes([0x10 | i]): #int(response[0]) ==  0x13: #followerResponse | bin(i):
+                    availableAddresses.append(i)
+                    self.write(i, [ack | i])  # boot is sending Ack response to tell its been processes
+                    print("Card slot "+str(i)+ " responded")
+                    i = i + 1
+                    continue
+                else:
+                    print("Invalid Response: \n Value Received: " + str(response[0]) +"\n Value Expected: " + bin(i| lResponse))
+                    i = 1+i
+                    continue
+            except OSError:        
+                time.sleep(.05)
+                print('Card slot '+ str(i) + ' did not respond.  ')
                 i = i + 1
-                continue
-            time.sleep(.1)
-            print('Card '+ bin(i) + ' did not respond.  ')
-            i = i + 1
 
         return availableAddresses
 
 
         #return an array of addresses
         #the poll function will be programmed in the actual firmware.
-
-    def poll(self, me, address):
-        #it wait 100ms for a response from slave
+        
+        
+        
+        
+        
+        
+    '''
+    05 - 16 - 2022
+    
+    
+    errors to fix:
+    bit mask for yesNo: value of bit mask does not change regardless of bitmask
+    its recvieing a value of 20 which is 0010 0000: try and review arduino code and make sure it is sending a recieving values correctly
+    
+    '''
+ 
+    def poll(self, addresses): #commented out variables 'me' 'address'
+        #it wait 100ms for a response from follower
         #else it will time out and report an error
         # remove from addresses[]
-        addresses = []
-        addresses.append(boot())
-        while(True):
-            for a in addresses:
-                self.write(addresses[a], lRequest | addresses[a])
-                self.wait(50)
-                response = self.read(addresses[a], 2)
-                if(response & 0xff == bin(0)):
-                    self.write(addresses[a] ,addresses[a] | byteRequest)
-                    information = self.read(addresses[a], response << 8)
-
-                    # ack knowledges that information hAS BEEN recieved
-                    self.write(addresses[a] ,addresses[a] | ack)
-                    #need multiple read functions, 
-                    #use the number of bytes to determine what read function to use.
-                    # add info for after the byte request
-                    return information
-
-                if(response & 0xff != bin(0)):
-                    print('no information!')
-                    # time.sleep(.1)
-                    # print('no reponse after byte request')
-                    #remove from list
-                    continue
-                # else:
-                #     print()
+      #  addresses = []
+      #  addresses.append()
+       # print(addresses) # print to mark when the poll function is active in data output i2c detect terminal command can be used with python to use for i2c
+        #
+        #if addresses:
+        #while(True): #when in a while loop it does not repeat is it becasue of the return function?
+        counter = 0
+        counter = counter + 1
+        for a in addresses:
+           ## print("loop number: " + str(counter))
+           
+           # 6-17-18 using a special poll header of 0x5
+            #print(0x50 | a)
+            self.write(a, [ 0x50 | a] ) #(lRequest | address))
+            time.sleep(.25)
+            #print(bin(0xff & a))
+            # will wait for a response from the card
+            #if not response it should skip this card
+            #if card does not respond a second time then to remove it from the system
+            
+            #self.wait(50)
 
 
-                time.sleep(.1)
-                #remove from list
-                print('did not respond')
+            response = self.read(a, 2) #commented out addresses  where a currently is
+           # print("first response back: " + str(response[1]))
+            time.sleep(.25)
+            # response byte 1 will contain header and card number, byte 2 contains value yes or no and how many bytes
+             #   i = i +1;
+            #
+            #print(type(response))
+          #  for i in response:
+           #     print("response " + str(i) + "binary: " + bin(i))
+            yesNo = response[1] #^ flagBit
+            #while i < yesNo:
+            unpackString = ''.join('B' for x in range(yesNo))
+            #information = []
+            result = []
+            print("card Type" + str(a))    
+            print(yesNo)
+           # print("yes /no value:" + str(yesNo) + " binary:" + bin(yesNo & 0xff) + " \n raw response [0]: \n" + str(response[0]) + " binary: " + bin(response[0] & 0xff)+ " \n raw response[1]: \n" + str(response[1]) + " binary: " + bin(response[1] & 0xff))
+            # note: REMEMBER  to add a part of code to make sure its getting data from the right card
+            #counter = counter + 1;
+            #print("\n")
+            if(yesNo < 128):
+                print("information is being recieved..")
+              #  print(response[0])
+              #  print(response[1])
+                byteRequest = response[1] 
+                print(type(byteRequest))
+                self.write(a,[0xa0 | a ]) # changed addresses[a] to just 'a' in this line it will write to the arduino the number of bytes it wants.
+                information = self.read(a, int(byteRequest) ) # changed addresses[a] to just 'a' removed: response << 8 from this line
+                print("data received from card Type " + str(a) + ": \n" + str(information) )
+              
+                time.sleep(.5)
+                # ack knowledges that information hAS BEEN recieved
+                self.write(a ,[a | ack])
                 
+                print(a | ack)
+                #need multiple read functions, 
+                #use the number of bytes to determine what read function to use.
+                # add info for after the byte request
+                print("\n")
+                result.append(information)
+               # print("\n")
+           # return information #/// commented out temp to see if its the problem for no loops note: not responsible for breaking the loop
+        #counter = counter + 1
+                
+            if((yesNo & 0x80) == 128): #friendly reminder that 255 means empty slot. trying with both 255 and 0 see whihc works correctly
+                print('no information frome card type: ' + str(a))
+                print("response value \n" + str(response[1]))
+                print("\n")
+                #information = "card " + str(a) + " no info" 
+               # information = 0x00 | a
+                result.append(response[1])
+               # print("\n")
+        
+            #counter = counter + 1   
+            # time.sleep(.1)
+            # print('no reponse after byte request')
+            #remove from list
+            #continue
+            else:
+                print("empty")
+            return result
+            
+            
+        #     print()
+
+
+        time.sleep(1)
+        #remove from list
+        print('did not respond')
+        
 
 
 
-            ...
 
-
-        ...
 
     def shutdown(self):
         addresses = []
@@ -226,90 +286,3 @@ class Leader:
     def error(self, address):
         ...
 
-
-# '''
-
-# interupts would have to be card specific, figure what how they should be triggered, 
-# these should done in the coding of the cards themselves but the api should have somewhat to trigger an interupt
-# and this interupt can specifically be coded into the card itself.
-
-# '''
-
-class Follower:
-
-    def __init__(self):
-        #should be able to identify with itself
-        #does the id and identification get added to the API or just in the actualy code of the Follower device doesa th device need to be ideantified at all
-        
-
-
-        ...
-
-    def read(self, fromLeader):
- 
-
-
-        ...
-
-    def write(self, toLeader, msg):
-        # will have to havea portion to write how much data is being sent
-
-
-        ...
-
-    def boot(self, addr):
-        #err = False
-        msg = self.read(leader)
-        self.wait(50)
- 
-        if(msg == boot | addr):
-            self.write(leader, lResponse | addr)
-            
-            
-            return #returns nothing just breaks out before timeout
-        time.sleep(.1)
-        print("TIMEOUT ERROR: Leader device did not respond. check code or wiring")
-
-        ...
-
-    def information(self, addr):
-         #use length = len(bytesObject) to figure out the byte length of the information being sent
-         #then send this information to the Leader so it can know how many bytes to request.
-
-        ...
-
-    def shutdown(self, addr, toLeader):
-        # write shutdown header to Leader so it knows that the card is shutting down.
-
-        #does the leader need to approve of shudown or can it just shutdown on its own.
-
-
-        '''
-        1. leader tells card to shutdown. 
-        2. cards acklowledge command
-        3. cards perform their specific shutdown functions 
-        4. and then finally send a final acknowledgement saying they shutdown.
-        5. Leader removes card from array of addr avaible and goes to next card.
-        6. finally the leader shutdown itself.
-        
-        '''
-
-
-
-
-        #final shutdown acknowledgement
-        self.write(toLeader, addr | shutdown)
-
-
-        #put this stats function to perform a shutdown function
-
-        #information eader contains shutdown header, set shutdown status to true
-        #and begin to shutdown processes.
-            #these process will be card specific and do different things so this shutdown function will need to be broad
-            
-
-        return True
-
-
-
-        ...
