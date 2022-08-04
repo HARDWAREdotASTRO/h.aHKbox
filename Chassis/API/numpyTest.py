@@ -4,6 +4,7 @@ import datetime
 
 
 date = datetime.datetime.now()
+TodaysDate = str(datetime.datetime.now().month) + str(datetime.datetime.now().day) + str(datetime.datetime.now().year)
 voltRes = 'Resistance'
 timearray = np.array(['Time'])
 cardarray = np.array(['Card Type'])
@@ -19,20 +20,22 @@ t = wireAC(test)
 timearray = np.append(timearray, str(date))
 cardarray = np.append(cardarray, (test[0] & 0x0f))
 temparray = np.append(temparray, str(t[0][0][3]))
-ch1array = np.append(ch1array, str(t[0]))
+ch1array = np.append(ch1array, str(t[0][0]))
 
 i = i + 1
 
 
 # here is your data, in two numpy arrays
 
-data = np.column_stack([timearray, cardarray, temparray, ch1array])
+data = np.column_stack([timearray, cardarray, temparray, ch1array]) 
 print(type(t[1][3]))
-datafile_path = "/Users/hy2755lw/Dropbox/4WireAC.txt "
-
-np.savetxt(datafile_path , data, fmt=['%s','%s','%s','%s'])
+datafile_path = "/Users/hy2755lw/Dropbox/" + TodaysDate+"-4WireAC.txt"
+#a = open(datafile_path, 'a')
+np.savetxt(datafile_path , data , fmt=['%s','%s','%s','%s'])
 # here the ascii file is written. 
 
 #file = np.savetxt("4AC-ch1.txt", ch1, fmt='%s')
+a = open(datafile_path, 'a')
 a = open(datafile_path, 'r')
 print(a.read())
+a.close()
