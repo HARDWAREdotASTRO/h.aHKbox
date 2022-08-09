@@ -82,7 +82,7 @@ SIDEBAR_STYLE = {
     "width": "16rem",
     "padding": "2rem 1rem",
     "background-color": "#f8f9fa",
-    'color' : 'dark'
+ 
 }
 
 sidebar = html.Div(
@@ -120,7 +120,15 @@ def render_page_content(pathname):
     elif pathname == "/export":
         return html.P("Oh cool, this is page 2!")
     elif pathname == "/4wire":
-        return html.P("4-wire AC page and information")
+        return html.Div([
+    dcc.Dropdown(
+        id = 'dropdown-to-show_or_hide-element',
+        options=[
+            {'label': 'Show element', 'value': 'on'},
+            {'label': 'Hide element', 'value': 'off'}
+        ],
+        value = 'on'
+    )])
     # If the user tries to reach a different page, return a 404 message
     return 
 
@@ -138,10 +146,36 @@ app.layout = html.Div([
 
     html.Div(id='tabs-content'),
     dcc.Store(id='session', storage_type='session'),
+    dbc.Container([
+        dbc.Row([
+            #side tabs
+            dbc.Col([
+                sidebar
+
+            ], width = 1),
+
+            dbc.Col([
+                dcc.Graph( 
+                id='live-graph2',
+                #animate = True
+                
+            ),
+
+            dcc.Interval(
+                id='graph-update2',
+                interval= 1*10000,
+                n_intervals = 0
+            ),
+
+
+
+            ], width = 5,)
+    ])
+    ]),
     dcc.Location(id="url"), sidebar, content,
 
     # this creates a list of options
-
+"""
     dcc.Tabs(
 
         id = "tabs-with-classes",
@@ -253,7 +287,7 @@ app.layout = html.Div([
 
                 ]),
 
-                                dcc.Tab (
+                dcc.Tab (
                 
                 label = 'export',
                 value = 't4',
@@ -303,7 +337,7 @@ app.layout = html.Div([
 
 # -----------------------------------------------------------------
 
-])
+]) """
 
 ])
 
@@ -321,6 +355,7 @@ def render_content(tab):
         randomRange = 5
     if (tab == 't2'):
         randomRange = 68
+    return {"display": "none"}, {"display": "none"}
 
 @app.callback(
     [Output('realRange', 'children')],
@@ -350,8 +385,6 @@ def update_metrics(n):
     ]
 
 # -------------------------------- Graph Update TWO--------------------------
-
-
 
 
 @app.callback(
@@ -410,15 +443,16 @@ def update_graph_scatter2(n):
     
     
     )
+  
     
     fig['layout']['margin'] = {
-        'l': 50, 'r': 20, 'b': 40, 't': 30
+        'l': 10, 'r': 10, 'b': 10, 't': 10,
+        'autoexpand' : False
     }
-    fig['layout']['legend'] = {'x': 1.5, 'y': 1, 'xanchor': 'right'}
-    #timee.append(timee[datetime.now()]-datetime.now()
-    
+    fig['layout']['legend'] = {'x': 1.1, 'y': 1, }
+ 
 
-# xx scatter lists
+
     t = plotly.graph_objs.Scatter(
 
         x = list(timee),
@@ -454,11 +488,7 @@ def update_graph_scatter2(n):
 
     ),
 
-#--- this portion of the code creates the colored line for each graph based on the values it recives from the 
-#--- previous value, this traces a line between each scatter points for each graph
 
-
-# xx scatter traces
     fig.add_trace(
         go.Scatter(
         t,
@@ -497,17 +527,9 @@ def update_graph_scatter2(n):
     )
 
     #fig.update_xaxes( autorange = True)
-    fig.update_layout(template = 'plotly_dark', autosize= True, ) # xaxis=dict(range=[min(X),max(X)]))
+    fig.update_layout(template = 'plotly_dark', autosize= True,), # xaxis=dict(range=[min(X),max(X)]))
     
     
-    #fig.update_xaxes(range=list(timee))
-  #  global ch
-
-   # ch = numpy.array([numpy.array(["Time ", "Temperature"])], [numpy.array([str(timee), str(Y)])])
-
-
-#    #################################### global df 
-#     df = pd.DataFrame({"Card data 1": Y,  "Time": timee })
 
 
     return fig
@@ -521,22 +543,11 @@ def update_graph_scatter2(n):
 )
 def func(n_clicks):
 
-    #file = numpy.savetxt("4AC-ch1.txt", ch, fmt='%s')
-    #a = open("4AC-ch1.txt", 'r')
-   # print(a.read())
-    #return dcc.send_file(file, '4AC-ch1.txt')
-   
+
     return #dict(content =file, filename="data.txt")
-   # return dcc.send_data_frame(df.to_csv, "mydf.csv")
-
-
-################ error
 
 
 
-
-
-# Main Call back
 
 if __name__ == '__main__':
     app.run_server(debug= True , dev_tools_hot_reload = False) 
