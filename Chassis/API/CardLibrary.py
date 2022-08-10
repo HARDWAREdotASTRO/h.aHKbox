@@ -44,9 +44,9 @@ def wireAC(bits):
                 ('Data', '>f'),
                 ('converted temp', '>f')])
     ch1 = np.array([])
-    ch2 = []#np.array([])
-    ch3 = []#np.array([])
-    ch4 = []#np.array([])
+    ch2 = np.array([])
+    ch3 = np.array([])
+    ch4 = np.array([])
     vr = 0
     #queByteData = bytearray([])
     # return a list of np arrays
