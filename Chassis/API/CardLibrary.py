@@ -19,7 +19,7 @@
 # function:
 # cards will be their own function and perform certain actions based on the logistical header
 # bits holds the byte array
-from weakref import finalize
+
 import struct
 import numpy as np
 
@@ -101,27 +101,19 @@ def wireAC(bits):
         # is channel on? ---> yes
         if((bits[1] & 0x80) == 0b1000 << 4):
 
-            #ch1 = np.array([1], dtype= channel)#np.append(ch1,1, np.dtype('i4'))
-            #print("ch1 is on")
             if((bits[1] & 0x08) == 0b1000 ):
-                #print("voltage")
-            #    ch1 = np.append(ch1,1)
-                vr= 0
+
+                vr = 0
             else:
-                #ch1 = np.append(ch1,0)
-                #print("Resistance")
+
                 vr = 1
 
-            
-            #ch1 = np.append(ch1,bits[val])
             data = struct.unpack('>f', bits[val +1: val + 5])
-            #ch1 = np.append(ch1, data)
-            #ch1 = np.append(ch1, data* 4)
+
             print(type(data[0]))
             ch1 = np.array([
                 (1, vr, val, data[0], data[0])], dtype = channel)
             array.append(ch1)
-            #array.append(struct.unpack('>f', bits[val +1:val + 5]))
 
             prevChannel = True
 
@@ -130,6 +122,7 @@ def wireAC(bits):
             ch1 = np.append(ch1,0)
             if((bits[1] & 0x08) == 0b1000 ):
                 ch1 = np.append(ch1,1)
+
             else:
                 ch1 = np.append(ch1,0)
 
@@ -138,89 +131,103 @@ def wireAC(bits):
 
 #channel 2 data
         if((bits[1] & 0x40) == 0b0100 << 4):
-            ch2.append(1)
+
             if((bits[1] & 0x04) == 0b0100 ):
-                ch2.append(1)
-               # print("voltage")
 
+                vr = 0
             else:
-                ch2.append(0)
-            if(prevChannel):
-                val += 5
-            ch2.append(bits[val])
-            ch2.append(struct.unpack('>f', bits[val +1:val + 5]))
 
-            print
+                vr = 1
+            if(prevChannel):
+                val += 5 
+
+            data = struct.unpack('>f', bits[val +1: val + 5])
+
+            print(type(data[0]))
+            ch2 = np.array([
+                (1, vr, val, data[0], data[0])], dtype = channel)
             array.append(ch2)
 
             prevChannel = True
 
-        
+        # is Channel on? ---> no
         elif((bits[1] & 0x80) == 0b0000 << 4):
-            ch2.append(0)
-            if((bits[1] & 0x08) == 0b1000 ):
-                ch2.append(1)
+            ch2 = np.append(ch2,0)
+            if((bits[1] & 0x08) == 0b0100 ):
+                ch2 = np.append(ch2,1)
+
             else:
-                ch2.append(0)
+                ch2 = np.append(ch2,0)
         
 
 
 
 
 #channel 3 data
-        if((bits[1] & 0x40) == 0b0100 << 4):
-            ch3.append(1)
-            if((bits[1] & 0x04) == 0b0100 ):
-                ch3.append(1)
-               # print("voltage")
+        if((bits[1] & 0x20) == 0b0010 << 4):
 
+            if((bits[1] & 0x02) == 0b0010 ):
+
+                vr = 0
             else:
-                ch3.append(0)
+
+                vr = 1
             if(prevChannel):
-                val += 5
-            ch3.append(bits[val])
-            ch3.append(struct.unpack('>f', bits[val +1:val + 5]))
+                val += 5 
+
+            data = struct.unpack('>f', bits[val +1: val + 5])
+
+            print(type(data[0]))
+            ch3 = np.array([
+                (1, vr, val, data[0], data[0])], dtype = channel)
             array.append(ch3)
 
             prevChannel = True
 
+        # is Channel on? ---> no
+        elif((bits[1] & 0x20) == 0b0000 << 4):
+            ch3 = np.append(ch3,0)
+            if((bits[1] & 0x02) == 0b0010 ):
+                ch3 = np.append(ch3,1)
+
+            else:
+                ch3 = np.append(ch3,0)
         
-        elif((bits[1] & 0x80) == 0b0000 << 4):
-            ch3.append(0)
-            if((bits[1] & 0x08) == 0b1000 ):
-                ch3.append(1)
+
+
+
+
+    # channel 4
+        if((bits[1] & 0x40) == 0b0001 << 4):
+
+            if((bits[1] & 0x04) == 0b0001 ):
+
+                vr = 0
             else:
-                ch3.append(0)
 
-
-
-
-
-        if((bits[1] & 0x40) == 0b0100 << 4):
-            ch4.append(1)
-            if((bits[1] & 0x04) == 0b0100 ):
-                ch4.append(1)
-               # print("voltage")
-
-            else:
-                ch4.append(0)
+                vr = 1
             if(prevChannel):
-                val += 5
-            ch4.append(bits[val])
-            ch4.append(struct.unpack('>f', bits[val +1:val + 5]))
+                val += 5 
+
+            data = struct.unpack('>f', bits[val +1: val + 5])
+
+            print(type(data[0]))
+            ch4 = np.array([
+                (1, vr, val, data[0], data[0])], dtype = channel)
             array.append(ch4)
 
             prevChannel = True
 
-        
+        # is Channel on? ---> no
         elif((bits[1] & 0x80) == 0b0000 << 4):
-            ch4.append(0)
-            if((bits[1] & 0x08) == 0b1000 ):
-                ch4.append(1)
-            else:
-                ch4.append(0)
+            ch4 = np.append(ch4,0)
+            if((bits[1] & 0x08) == 0b0001 ):
+                ch4 = np.append(ch4,1)
 
-        return array
+            else:
+                ch4 = np.append(ch4,0)
+        
+
 
 
 
@@ -241,10 +248,10 @@ def wireAC(bits):
 
 test = bytearray([0x33, 0xff,    0x01, 0x02, 0xa3, 0x04, 0x05,    0x06, 0x07, 0x0b8, 0x09, 0x0a,     0x0b, 0x0c, 0xcd, 0x0e, 0x0f,      0x10, 0x11, 0xd2, 0x13, 0x14])
 t = wireAC(test)
-t_array = np.array(wireAC(test))
+#t_array = np.array(wireAC(test))
 print('function')
 #print(t[0][4])
 print(t)
-print(t_array)
+#print(t_array)
 #
 # help(wireAC)
