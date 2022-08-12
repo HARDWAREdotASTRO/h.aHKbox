@@ -25,6 +25,33 @@ import numpy as np
 
 from numpy import array
 
+
+
+
+def cardType(header):
+    ''' keep in mind this function is a prototype and that this is a long way to parse out data. I would recomment find a shorter
+    and possibly much more efficent way to parse and sort this data properly. n\
+    This function could also be done as a class instead but for now I wrote it as a function. it takes in data from the h.ahk box
+    and looks at the first header data. it reads the card type bits and then sends the rest of the data to be read and interpreted by
+    its corresponding card type function'''
+
+    if((header[0] & 0x0f) == 0x01):
+        #card type function
+        ...
+    if((header[0] & 0x0f) == 0x02):
+        # Card type 2 function
+        ...
+    if((header[0] & 0x0f) == 0x03):
+        wireAC(header)
+        ...
+    if((header[0] & 0x0f) == 0x04):
+        # Card Type 4 function
+        ...
+    if((header[0] & 0x0f) == 0x05):
+        # Card type 5 function
+        ...
+
+
 # for future optimization
 def wireAC(bits):
     '''This function takes in a 'bytearray'. There is a limited amount of data this function should accept
@@ -68,15 +95,6 @@ def wireAC(bits):
         
 
         ...
-
-    
-    #byte request
-    if((bits[0] & 0xf0) == 0b00001 << 4):
-
-
-        ...
-    
-
     # error
     if((bits[0] & 0xf0) == 0b00010 << 4):
 
@@ -151,7 +169,7 @@ def wireAC(bits):
             prevChannel = True
 
         # is Channel on? ---> no
-        elif((bits[1] & 0x80) == 0b0000 << 4):
+        elif((bits[1] & 0x40) == 0b0000 << 4):
             ch2 = np.append(ch2,0)
             if((bits[1] & 0x08) == 0b0100 ):
                 ch2 = np.append(ch2,1)
@@ -197,10 +215,11 @@ def wireAC(bits):
 
 
 
-    # channel 4
-        if((bits[1] & 0x40) == 0b0001 << 4):
 
-            if((bits[1] & 0x04) == 0b0001 ):
+    # channel 4
+        if((bits[1] & 0x10) == 0b0001 << 4):
+
+            if((bits[1] & 0x01) == 0b0001 ):
 
                 vr = 0
             else:
@@ -219,16 +238,16 @@ def wireAC(bits):
             prevChannel = True
 
         # is Channel on? ---> no
-        elif((bits[1] & 0x80) == 0b0000 << 4):
+        elif((bits[1] & 0x10) == 0b0000 << 4):
             ch4 = np.append(ch4,0)
-            if((bits[1] & 0x08) == 0b0001 ):
+            if((bits[1] & 0x01) == 0b0001 ):
                 ch4 = np.append(ch4,1)
 
             else:
                 ch4 = np.append(ch4,0)
         
 
-
+  
 
 
 
@@ -237,7 +256,7 @@ def wireAC(bits):
 
         
     #command response
-    if((bits[0] & 0xf0) == 0b00111 << 4):
+    if((bits[0] & 0xf0) == 0b0111 << 4):
         # this portion of code will be responsible for handling user input responses. 
         # this will allow the user to turn a channel off, export channel data, and to switch between voltages and resistance values
 
@@ -246,6 +265,10 @@ def wireAC(bits):
 
         ...
 
+# below the 4 wire ac card more card information
+
+
+# this below here is old testing code. this will need to be removed
 test = bytearray([0x33, 0xff,    0x01, 0x02, 0xa3, 0x04, 0x05,    0x06, 0x07, 0x0b8, 0x09, 0x0a,     0x0b, 0x0c, 0xcd, 0x0e, 0x0f,      0x10, 0x11, 0xd2, 0x13, 0x14])
 t = wireAC(test)
 #t_array = np.array(wireAC(test))
