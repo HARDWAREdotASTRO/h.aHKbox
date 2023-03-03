@@ -27,7 +27,7 @@ from numpy import array
 
 
 
-
+# future note: turn into a class object instead
 def cardType(header):
     ''' keep in mind this function is a prototype and that this is a long way to parse out data. I would recomment find a shorter
     and possibly much more efficent way to parse and sort this data properly. n\
@@ -43,7 +43,7 @@ def cardType(header):
         ...
     if((header[0] & 0x0f) == 0x03):
         wireAC(header)
-        ...
+        
     if((header[0] & 0x0f) == 0x04):
         # Card Type 4 function
         ...
@@ -74,6 +74,7 @@ def wireAC(bits):
     ch2 = np.array([])
     ch3 = np.array([])
     ch4 = np.array([])
+    #either a 1 or a 0 depending on if the value is a voltage or resistance
     vr = 0
     #queByteData = bytearray([])
     # return a list of np arrays
@@ -83,7 +84,7 @@ def wireAC(bits):
 
 
     # signal to talk
-    # tells GUI to un hide tab
+    # tells GUI to generate a 4 wire AC tab interface
     # return a boolean?
     if((bits[0] & 0xf0) == 0b00000 << 4):
         '''
@@ -95,6 +96,16 @@ def wireAC(bits):
         
 
         ...
+
+    
+    #byte request
+    
+    if((bits[0] & 0xf0) == 0b00001 << 4):
+
+
+        ...
+    
+
     # error
     if((bits[0] & 0xf0) == 0b00010 << 4):
 
@@ -119,20 +130,22 @@ def wireAC(bits):
         # is channel on? ---> yes
         if((bits[1] & 0x80) == 0b1000 << 4):
 
+            # returns if its a voltage  or a resistance
             if((bits[1] & 0x08) == 0b1000 ):
 
                 vr = 0
             else:
 
                 vr = 1
-
-            data = struct.unpack('>f', bits[val +1: val + 5])
+            #unpacks byte value
+            data = struct.unpack('>f', bits[val + 1: val + 5])
+            print(data)
 
             print(type(data[0]))
             ch1 = np.array([
                 (1, vr, val, data[0], data[0])], dtype = channel)
             array.append(ch1)
-
+            # boolean is to let other channels know the one before it was on.
             prevChannel = True
 
         # is Channel on? ---> no
@@ -156,10 +169,12 @@ def wireAC(bits):
             else:
 
                 vr = 1
+            # boolean variable is that it will know if the previous channel was on
+            #it will shift the value to the next 5 bits of information
             if(prevChannel):
                 val += 5 
 
-            data = struct.unpack('>f', bits[val +1: val + 5])
+            data = struct.unpack('>f', bits[val + 1: val + 5])
 
             print(type(data[0]))
             ch2 = np.array([
@@ -266,8 +281,8 @@ def wireAC(bits):
         ...
 
 # below the 4 wire ac card more card information
-
-
+    # def cardError():
+    #     ...
 # this below here is old testing code. this will need to be removed
 test = bytearray([0x33, 0xff,    0x01, 0x02, 0xa3, 0x04, 0x05,    0x06, 0x07, 0x0b8, 0x09, 0x0a,     0x0b, 0x0c, 0xcd, 0x0e, 0x0f,      0x10, 0x11, 0xd2, 0x13, 0x14])
 t = wireAC(test)
