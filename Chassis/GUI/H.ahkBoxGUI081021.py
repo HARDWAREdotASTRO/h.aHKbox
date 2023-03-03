@@ -82,7 +82,7 @@ SIDEBAR_STYLE = {
     "width": "16rem",
     "padding": "2rem 1rem",
     "background-color": "#f8f9fa",
-    'color' : 'dark'
+ 
 }
 
 sidebar = html.Div(
@@ -120,7 +120,15 @@ def render_page_content(pathname):
     elif pathname == "/export":
         return html.P("Oh cool, this is page 2!")
     elif pathname == "/4wire":
-        return html.P("4-wire AC page and information")
+        return html.Div([
+    dcc.Dropdown(
+        id = 'dropdown-to-show_or_hide-element',
+        options=[
+            {'label': 'Show element', 'value': 'on'},
+            {'label': 'Hide element', 'value': 'off'}
+        ],
+        value = 'on'
+    )])
     # If the user tries to reach a different page, return a 404 message
     return 
 
@@ -253,7 +261,7 @@ app.layout = html.Div([
 
                 ]),
 
-                                dcc.Tab (
+                dcc.Tab (
                 
                 label = 'export',
                 value = 't4',
@@ -321,6 +329,7 @@ def render_content(tab):
         randomRange = 5
     if (tab == 't2'):
         randomRange = 68
+    return {"display": "none"}, {"display": "none"}
 
 @app.callback(
     [Output('realRange', 'children')],
@@ -350,8 +359,6 @@ def update_metrics(n):
     ]
 
 # -------------------------------- Graph Update TWO--------------------------
-
-
 
 
 @app.callback(
@@ -410,11 +417,13 @@ def update_graph_scatter2(n):
     
     
     )
+  
     
     fig['layout']['margin'] = {
-        'l': 50, 'r': 20, 'b': 40, 't': 30
+        'l': 100, 'r': 10, 'b': 10, 't': 50,
+        'autoexpand' : False
     }
-    fig['layout']['legend'] = {'x': 1.5, 'y': 1, 'xanchor': 'right'}
+    fig['layout']['legend'] = {'x': 1.1, 'y': 1, }
     #timee.append(timee[datetime.now()]-datetime.now()
     
 
@@ -497,7 +506,7 @@ def update_graph_scatter2(n):
     )
 
     #fig.update_xaxes( autorange = True)
-    fig.update_layout(template = 'plotly_dark', autosize= True, ) # xaxis=dict(range=[min(X),max(X)]))
+    fig.update_layout(template = 'plotly_dark', autosize= True,), # xaxis=dict(range=[min(X),max(X)]))
     
     
     #fig.update_xaxes(range=list(timee))
@@ -531,10 +540,6 @@ def func(n_clicks):
 
 
 ################ error
-
-
-
-
 
 # Main Call back
 
